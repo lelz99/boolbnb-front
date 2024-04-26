@@ -1,12 +1,13 @@
 <script>
 import axios from 'axios';
-import HomePage from './components/HomePage.vue';
+import { RouterView } from 'vue-router';
+import AppHeader from './components/AppHeader.vue'
 const baseUri = 'http://localhost:8000/api/';
 
 export default {
   name: 'Boolbnb',
   data: () => ({ apartments: [] }),
-  components: { HomePage},
+  components: { AppHeader },
   methods: {
 
     fetchApartments() {
@@ -21,10 +22,9 @@ export default {
 </script>
 
 <template>
+  <AppHeader />
   <main>
-  <div class="container py-5">
-    <HomePage />
-  </div>
+    <RouterView />
   </main>
 </template>
 
