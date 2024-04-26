@@ -5,30 +5,38 @@ export default {
   name: 'HomePage',
   data() {
     return {
+      apartments: [],
+      addressTerm: '', // Input dell'utente
       suggestions: [], // Array per memorizzare gli indirizzi suggeriti
       selectedAddress: {}, // Indirizzo selezionato
-      addressTerm: '', // Input dell'utente
       latitude: '', // Latitudine selezionata
       longitude: '', // Longitudine selezionata
-      apartments: [],
       distanceRadius: 20, // Imposta un valore predefinito per il raggio di distanza (20 km)
+      timeout: null, // Timeout per ritardare le richieste
     }
   },
   methods: {
     suggestAddresses() {
       if (!this.addressTerm.trim()) {
-        this.suggestions = []; // Pulisci la lista dei suggerimenti se l'input è vuoto
+        this.suggestions = [];
         return;
       }
-      // Effettua la chiamata API per suggerire gli indirizzi
-      axios.get('https://api.tomtom.com/search/2/geocode/' + this.addressTerm.trim() + '.json', {
-        params: {
-          key: 'vDGqRtusGtGdJKA6KXnnnRPK44NG2Uwn',
-          limit: 5,
-          language: 'it-IT',
-          countrySet: 'IT'
-        }
-      })
+
+      // Se c'è già una richiesta in corso, annulla il timeout
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+      }
+
+      // Avvia un timeout per ritardare l'esecuzione della richiesta
+      this.timeout = setTimeout(() => {
+        axios.get('https://api.tomtom.com/search/2/geocode/' + this.addressTerm.trim() + '.json', {
+          params: {
+            key: 'vDGqRtusGtGdJKA6KXnnnRPK44NG2Uwn',
+            limit: 5,
+            language: 'it-IT',
+            countrySet: 'IT'
+          }
+        })
         .then(response => {
           this.suggestions = response.data.results.map(result => ({
             address: result.address.freeformAddress,
@@ -38,15 +46,18 @@ export default {
         })
         .catch(error => {
           console.error(error);
-          this.suggestions = []; // Pulisci la lista dei suggerimenti in caso di errore
+          this.suggestions = [];
         });
+      }, 500); // Ritardo di 500 millisecondi tra le richieste
     },
+
     selectAddress(address) {
       this.selectedAddress = address;
       this.latitude = address.lat; // Aggiorna la latitudine nel dato Vue.js
       this.longitude = address.lon; // Aggiorna la longitudine nel dato Vue.js
       this.addressTerm = address.address; // Compila l'input dell'indirizzo con l'indirizzo selezionato
     },
+
     submitForm() {
       // Effettua una chiamata API al tuo endpoint Laravel
       axios.get(`http://localhost:8000/api/apartments/search`, {
@@ -56,13 +67,13 @@ export default {
           radius: this.distanceRadius
         }
       })
-        .then(response => {
-          this.apartments = response.data;
-          console.log(this.apartments);
-        })
-        .catch(error => {
-          console.error('Errore durante il recupero degli appartamenti:', error);
-        });
+      .then(response => {
+        this.apartments = response.data;
+        console.log(this.apartments);
+      })
+      .catch(error => {
+        console.error('Errore durante il recupero degli appartamenti:', error);
+      });
     }
   }
 }
@@ -71,7 +82,7 @@ export default {
 <template>
   <div class="col-12">
     <div class="mb-3">
-      <label for="address" class="form-label">Indirizzo<span class="text-danger">*</span></label>
+      <label for="address" class="form-label">Cerca appartamenti</label>
       <div class="d-flex gap-3">
         <input type="text" class="form-control" id="address" name="address" v-model="addressTerm"
         @input="suggestAddresses">
@@ -79,8 +90,7 @@ export default {
           <input type="range" class="form-range" id="radius" name="radius" min="20" max="60" step="10" v-model.number="distanceRadius">
           <span>{{ distanceRadius }} km</span>
         </div>
-
-         <button class="btn btn-primary" @click="submitForm">Invia</button>
+         <button class="btn btn-primary" @click="submitForm"><i class="fas fa-search"></i></button>
       </div>
 
 
