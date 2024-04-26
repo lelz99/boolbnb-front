@@ -1,16 +1,26 @@
 <script>
 import axios from 'axios';
 import AppHeader from './components/AppHeader.vue';
+import PostList from './components/apartments/ApartmentList.vue'
+import AppAlert from './components/AppAlert.vue';
 const baseUri = 'http://localhost:8000/api/';
 
 export default {
   name: 'Boolbnb',
-  components: {AppHeader},
-  data: () => ({ apartments: [] }),
+  components: {AppHeader, PostList, AppAlert},
+  data: () => ({ apartments: [], isLoading: false, isAlertOpen: false }),
   methods: {
 
     fetchApartments() {
-      axios.get(baseUri + 'apartments/').then(res => { this.apartments = res.data })
+      this.isLoading = true;
+      axios.get(baseUri + 'apartments/')
+      .then(res => { this.apartments = res.data })
+      .catch(err => {
+        console.error(err);
+        this.isAlertOpen = true;
+      }).then(()=>{
+        this.isLoading = false;
+      })
     }
 
   },
@@ -20,14 +30,14 @@ export default {
 }
 </script>
 
-<template>
+<template>  
   <AppHeader/>
   <main class="container mt-4">
-    <ul>
-    <li v-for="apartment in apartments" :key="apartment.id">{{ apartment.title }}</li>
-  </ul>
+    <AppAlert :show="isAlertOpen" @close=""/>
+    <AppLoader v-if="isLoading"/>
+    <PostList v-else :apartments="apartments"/>
   </main>
-  
+
 </template>
 
 <style lang="scss">
