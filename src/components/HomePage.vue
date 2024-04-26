@@ -28,17 +28,17 @@ export default {
           countrySet: 'IT'
         }
       })
-      .then(response => {
-        this.suggestions = response.data.results.map(result => ({
-          address: result.address.freeformAddress,
-          lat: result.position.lat,
-          lon: result.position.lon
-        }));
-      })
-      .catch(error => {
-        console.error(error);
-        this.suggestions = []; // Pulisci la lista dei suggerimenti in caso di errore
-      });
+        .then(response => {
+          this.suggestions = response.data.results.map(result => ({
+            address: result.address.freeformAddress,
+            lat: result.position.lat,
+            lon: result.position.lon
+          }));
+        })
+        .catch(error => {
+          console.error(error);
+          this.suggestions = []; // Pulisci la lista dei suggerimenti in caso di errore
+        });
     },
     selectAddress(address) {
       this.selectedAddress = address;
@@ -47,19 +47,19 @@ export default {
       this.addressTerm = address.address; // Compila l'input dell'indirizzo con l'indirizzo selezionato
     },
     submitForm() {
-       // Effettua una chiamata API al tuo endpoint Laravel
-        axios.get(`http://localhost:8000/api/apartments/?distance=1`, {
-            params: {
-                latitude: this.latitude,
-                longitude: this.longitude
-            }
-        })
+      // Effettua una chiamata API al tuo endpoint Laravel
+      axios.get(`http://localhost:8000/api/apartments/search`, {
+        params: {
+          latitude: this.latitude,
+          longitude: this.longitude
+        }
+      })
         .then(response => {
-            this.apartments = response.data;
-            console.log(this.apartments);
+          this.apartments = response.data;
+          console.log(this.apartments);
         })
         .catch(error => {
-            console.error('Errore durante il recupero degli appartamenti:', error);
+          console.error('Errore durante il recupero degli appartamenti:', error);
         });
     }
   }
@@ -67,22 +67,17 @@ export default {
 </script>
 
 <template>
-    <div class="col-12">
-      <div class="mb-3">
-        <label for="address" class="form-label">Indirizzo<span class="text-danger">*</span></label>
-        <input type="text"
-          class="form-control"
-          id="address"
-          name="address"
-          v-model="addressTerm"
-          @input="suggestAddresses">
-        <ul id="suggestions-list" class="p-2 mt-3 bg-light rounded" v-show="suggestions.length > 0">
-          <li v-for="suggestion in suggestions" :key="suggestion.lat + suggestion.lon" @click="selectAddress(suggestion)">
-            <i class="fa-solid fa-location-dot text-primary"></i> {{ suggestion.address }}
-          </li>
-        </ul>
-      </div>
-      <button class="btn btn-primary" @click="submitForm">Invia</button>
+  <div class="col-12">
+    <div class="mb-3">
+      <label for="address" class="form-label">Indirizzo<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" id="address" name="address" v-model="addressTerm"
+        @input="suggestAddresses">
+      <ul id="suggestions-list" class="p-2 mt-3 bg-light rounded" v-show="suggestions.length > 0">
+        <li v-for="suggestion in suggestions" :key="suggestion.lat + suggestion.lon" @click="selectAddress(suggestion)">
+          <i class="fa-solid fa-location-dot text-primary"></i> {{ suggestion.address }}
+        </li>
+      </ul>
     </div>
-  </template>
-  
+    <button class="btn btn-primary" @click="submitForm">Invia</button>
+  </div>
+</template>
