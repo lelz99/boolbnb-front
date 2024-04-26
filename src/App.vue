@@ -8,9 +8,7 @@ const baseUri = 'http://localhost:8000/api/';
 
 export default {
   name: 'Boolbnb',
-  data: () => ({ apartments: [] }),
-  components: { HomePage},
-  components: {AppHeader, PostList, AppAlert},
+  components: {AppHeader, PostList, AppAlert, HomePage},
   data: () => ({ apartments: [], isLoading: false, isAlertOpen: false }),
   methods: {
 
