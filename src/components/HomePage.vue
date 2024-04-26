@@ -11,6 +11,7 @@ export default {
       latitude: '', // Latitudine selezionata
       longitude: '', // Longitudine selezionata
       apartments: [],
+      distanceRadius: 20, // Imposta un valore predefinito per il raggio di distanza (20 km)
     }
   },
   methods: {
@@ -51,7 +52,8 @@ export default {
       axios.get(`http://localhost:8000/api/apartments/search`, {
         params: {
           latitude: this.latitude,
-          longitude: this.longitude
+          longitude: this.longitude,
+          radius: this.distanceRadius
         }
       })
         .then(response => {
@@ -70,14 +72,24 @@ export default {
   <div class="col-12">
     <div class="mb-3">
       <label for="address" class="form-label">Indirizzo<span class="text-danger">*</span></label>
-      <input type="text" class="form-control" id="address" name="address" v-model="addressTerm"
+      <div class="d-flex gap-3">
+        <input type="text" class="form-control" id="address" name="address" v-model="addressTerm"
         @input="suggestAddresses">
+        <div>
+          <input type="range" class="form-range" id="radius" name="radius" min="20" max="60" step="10" v-model.number="distanceRadius">
+          <span>{{ distanceRadius }} km</span>
+        </div>
+
+         <button class="btn btn-primary" @click="submitForm">Invia</button>
+      </div>
+
+
+     
       <ul id="suggestions-list" class="p-2 mt-3 bg-light rounded" v-show="suggestions.length > 0">
         <li v-for="suggestion in suggestions" :key="suggestion.lat + suggestion.lon" @click="selectAddress(suggestion)">
           <i class="fa-solid fa-location-dot text-primary"></i> {{ suggestion.address }}
         </li>
       </ul>
     </div>
-    <button class="btn btn-primary" @click="submitForm">Invia</button>
   </div>
 </template>
