@@ -1,10 +1,12 @@
 <script>
 import axios from 'axios';
+import HomePage from './components/HomePage.vue';
 const baseUri = 'http://localhost:8000/api/';
 
 export default {
   name: 'Boolbnb',
   data: () => ({ apartments: [] }),
+  components: { HomePage},
   methods: {
 
     fetchApartments() {
@@ -19,9 +21,11 @@ export default {
 </script>
 
 <template>
-  <ul>
-    <li v-for="apartment in apartments" :key="apartment.id">{{ apartment.title }}</li>
-  </ul>
+  <main>
+  <div class="container py-5">
+    <HomePage />
+  </div>
+  </main>
 </template>
 
 <style scoped></style>
