@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import HomePage from './components/HomePage.vue';
 import AppHeader from './components/AppHeader.vue';
 import PostList from './components/apartments/ApartmentList.vue'
 import AppAlert from './components/AppAlert.vue';
@@ -7,6 +8,8 @@ const baseUri = 'http://localhost:8000/api/';
 
 export default {
   name: 'Boolbnb',
+  data: () => ({ apartments: [] }),
+  components: { HomePage},
   components: {AppHeader, PostList, AppAlert},
   data: () => ({ apartments: [], isLoading: false, isAlertOpen: false }),
   methods: {
