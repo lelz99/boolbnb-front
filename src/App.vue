@@ -2,13 +2,13 @@
 import axios from 'axios';
 import HomePage from './components/HomePage.vue';
 import AppHeader from './components/AppHeader.vue';
-import PostList from './components/apartments/ApartmentList.vue'
 import AppAlert from './components/AppAlert.vue';
+import ApartmentList from './components/apartments/ApartmentList.vue';
 const baseUri = 'http://localhost:8000/api/';
 
 export default {
   name: 'Boolbnb',
-  components: {AppHeader, PostList, AppAlert, HomePage},
+  components: {AppHeader, ApartmentList, AppAlert, HomePage},
   data: () => ({ apartments: [], isLoading: false, isAlertOpen: false }),
   methods: {
 
@@ -39,7 +39,7 @@ export default {
   <main class="container mt-4">
     <AppAlert :show="isAlertOpen" @close="isAlertOpen = false"/>
     <AppLoader v-if="isLoading"/>
-    <PostList v-else :apartments="apartments"/>
+    <ApartmentList v-else :apartments="apartments"/>
   </main>
 
 </template>
