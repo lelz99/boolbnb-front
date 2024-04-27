@@ -4,5 +4,5 @@ import App from './App.vue'
 import AppLoader from './components/AppLoader.vue';
 
 createApp(App)
-.component('Apploader', AppLoader)
+.component('AppLoader', AppLoader)
 .mount('#app')

@@ -17,7 +17,7 @@ export default {
       axios.get(baseUri + 'apartments/')
       .then(res => { 
         this.apartments = res.data;
-        this.isAlertOpen = true;
+        this.isAlertOpen = false;
       })
       .catch(err => {
         console.error(err);
