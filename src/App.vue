@@ -15,7 +15,10 @@ export default {
     fetchApartments() {
       this.isLoading = true;
       axios.get(baseUri + 'apartments/')
-      .then(res => { this.apartments = res.data })
+      .then(res => { 
+        this.apartments = res.data;
+        this.isAlertOpen = true;
+      })
       .catch(err => {
         console.error(err);
         this.isAlertOpen = true;
@@ -34,7 +37,7 @@ export default {
 <template>  
   <AppHeader/>
   <main class="container mt-4">
-    <AppAlert :show="isAlertOpen" @close=""/>
+    <AppAlert :show="isAlertOpen" @close="isAlertOpen = false"/>
     <AppLoader v-if="isLoading"/>
     <PostList v-else :apartments="apartments"/>
   </main>
