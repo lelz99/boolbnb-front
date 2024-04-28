@@ -1,17 +1,31 @@
 <script>
 import axios from 'axios';
+import HomePage from './components/HomePage.vue';
+import AppHeader from './components/AppHeader.vue';
+import AppAlert from './components/AppAlert.vue';
+import ApartmentList from './components/apartments/ApartmentList.vue';
 import { RouterView } from 'vue-router';
-import AppHeader from './components/AppHeader.vue'
 const baseUri = 'http://localhost:8000/api/';
 
 export default {
   name: 'Boolbnb',
-  data: () => ({ apartments: [] }),
-  components: { AppHeader },
+  components: {AppHeader, ApartmentList, AppAlert, HomePage},
+  data: () => ({ apartments: [], isLoading: false, isAlertOpen: false }),
   methods: {
 
     fetchApartments() {
-      axios.get(baseUri + 'apartments/').then(res => { this.apartments = res.data })
+      this.isLoading = true;
+      axios.get(baseUri + 'apartments/')
+      .then(res => { 
+        this.apartments = res.data;
+        this.isAlertOpen = false;
+      })
+      .catch(err => {
+        console.error(err);
+        this.isAlertOpen = true;
+      }).then(()=>{
+        this.isLoading = false;
+      })
     }
 
   },
@@ -21,11 +35,18 @@ export default {
 }
 </script>
 
-<template>
-  <AppHeader />
-  <main>
-    <RouterView />
+
+<template>  
+  <AppHeader/>
+  <main class="container mt-4">
+    <AppAlert :show="isAlertOpen" @close="isAlertOpen = false"/>
+    <AppLoader v-if="isLoading"/>
+    <ApartmentList v-else :apartments="apartments"/>
+    // <RouterView />
   </main>
+
 </template>
 
-<style scoped></style>
+<style lang="scss">
+  @use'./assets/scss/style.scss'
+</style>
