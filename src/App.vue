@@ -4,6 +4,7 @@ import HomePage from './components/HomePage.vue';
 import AppHeader from './components/AppHeader.vue';
 import AppAlert from './components/AppAlert.vue';
 import ApartmentList from './components/apartments/ApartmentList.vue';
+import { RouterView } from 'vue-router';
 const baseUri = 'http://localhost:8000/api/';
 
 export default {
@@ -34,12 +35,14 @@ export default {
 }
 </script>
 
+
 <template>  
   <AppHeader/>
   <main class="container mt-4">
     <AppAlert :show="isAlertOpen" @close="isAlertOpen = false"/>
     <AppLoader v-if="isLoading"/>
     <ApartmentList v-else :apartments="apartments"/>
+    // <RouterView />
   </main>
 
 </template>
