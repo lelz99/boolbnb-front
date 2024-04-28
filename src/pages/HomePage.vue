@@ -1,11 +1,21 @@
 <script>
 import axios from 'axios';
+import ApartmentCard from '../components/apartments/ApartmentCard.vue';
+import ApartmentList from '../components/apartments/ApartmentList.vue';
+import AppLoader from '../components/AppLoader.vue';
+import AppAlert from '../components/AppAlert.vue';
+
+const baseUri = 'http://localhost:8000/api/';
 
 
 export default {
   name: 'HomePage',
+  components: {ApartmentCard, ApartmentList, AppAlert},
   data() {
     return {
+      apartmentsList: [],
+      isLoading: false,
+      isAlertOpen: false,
       apartments: [],
       addressTerm: '', // Input dell'utente
       suggestions: [], // Array per memorizzare gli indirizzi suggeriti
@@ -75,7 +85,26 @@ export default {
         .catch(error => {
           console.error('Errore durante il recupero degli appartamenti:', error);
         });
+    },
+
+    fetchApartments() {
+      this.isLoading = true;
+      axios.get(baseUri + 'apartments/')
+      .then(res => { 
+        this.apartmentsList = res.data;
+        this.isAlertOpen = false;
+      })
+      .catch(err => {
+        console.error(err);
+        this.isAlertOpen = true;
+      }).then(()=>{
+        this.isLoading = false;
+      })
     }
+  },
+
+  created(){
+    this.fetchApartments()
   }
 }
 </script>
@@ -106,4 +135,7 @@ export default {
       </ul>
     </div>
   </div>
+    <AppAlert :show="isAlertOpen" @close="isAlertOpen = false"/>
+    <AppLoader v-if="isLoading"/>
+    <ApartmentList v-else :apartments="apartmentsList"/>
 </template>
