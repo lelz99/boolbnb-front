@@ -4,6 +4,7 @@ import ApartmentCard from '../components/apartments/ApartmentCard.vue';
 import ApartmentList from '../components/apartments/ApartmentList.vue';
 import AppLoader from '../components/AppLoader.vue';
 import AppAlert from '../components/AppAlert.vue';
+import { store } from '../data/store';
 import SearchBar from '../components/SearchBar.vue';
 
 const baseUri = 'http://localhost:8000/api/';
@@ -68,6 +69,7 @@ export default {
       this.latitude = address.lat; // Aggiorna la latitudine nel dato Vue.js
       this.longitude = address.lon; // Aggiorna la longitudine nel dato Vue.js
       this.addressTerm = address.address; // Compila l'input dell'indirizzo con l'indirizzo selezionato
+      this.suggestions = [];
     },
 
     submitForm() {
@@ -76,12 +78,15 @@ export default {
         params: {
           latitude: this.latitude,
           longitude: this.longitude,
-          radius: this.distanceRadius
+          radius: this.distanceRadius,
         }
       })
         .then(response => {
           this.apartments = response.data;
-          console.log(this.apartments)
+          store.apartments = this.apartments;
+          store.distanceRadius = this.distanceRadius;
+          // console.log(this.apartments);
+          console.log(store.apartments);
         })
         .catch(error => {
           console.error('Errore durante il recupero degli appartamenti:', error);
