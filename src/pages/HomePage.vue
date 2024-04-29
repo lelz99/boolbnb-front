@@ -5,13 +5,14 @@ import ApartmentList from '../components/apartments/ApartmentList.vue';
 import AppLoader from '../components/AppLoader.vue';
 import AppAlert from '../components/AppAlert.vue';
 import { store } from '../data/store';
+import SearchBar from '../components/SearchBar.vue';
 
 const baseUri = 'http://localhost:8000/api/';
 
 
 export default {
   name: 'HomePage',
-  components: { ApartmentCard, ApartmentList, AppAlert },
+  components: { ApartmentCard, ApartmentList, AppAlert, SearchBar },
   data() {
     return {
       apartmentsList: [],
@@ -23,7 +24,7 @@ export default {
       selectedAddress: {}, // Indirizzo selezionato
       latitude: '', // Latitudine selezionata
       longitude: '', // Longitudine selezionata
-      distanceRadius: 20, // Imposta un valore predefinito per il raggio di distanza (20 km)
+      distanceRadius: '20', // Imposta un valore predefinito per il raggio di distanza (20 km)
       timeout: null, // Timeout per ritardare le richieste
     }
   },
@@ -116,29 +117,10 @@ export default {
 
 <template>
   <div class="col-12">
-    <div class="mb-3">
-      <label for="address" class="form-label">Cerca appartamenti</label>
-      <div class="d-flex gap-3">
-        <input type="text" class="form-control" id="address" name="address" v-model="addressTerm"
-          @input="suggestAddresses">
-        <div>
-          <input type="range" class="form-range" id="radius" name="radius" min="20" max="60" step="10"
-            v-model.number="distanceRadius">
-          <span>{{ distanceRadius }} km</span>
-        </div>
-        <router-link :to="{ name: 'filter' }">
-          <button class="btn btn-primary" @click="submitForm"><i class="fas fa-search"></i></button>
-        </router-link>
-      </div>
-
-
-
-      <ul id="suggestions-list" class="p-2 mt-3 bg-light rounded" v-show="suggestions.length > 0">
-        <li v-for="suggestion in suggestions" :key="suggestion.lat + suggestion.lon" @click="selectAddress(suggestion)">
-          <i class="fa-solid fa-location-dot text-primary"></i> {{ suggestion.address }}
-        </li>
-      </ul>
-    </div>
+    <!-- Ricerca -->
+    <SearchBar @selectAddress="selectAddress" @suggest="suggestAddresses" :suggestions='suggestions'
+      v-model="addressTerm" v-model:distanceRadius="distanceRadius" :selectedAddress="selectedAddress"
+      @submitForm="submitForm" />
   </div>
   <AppAlert :show="isAlertOpen" @close="isAlertOpen = false" />
   <AppLoader v-if="isLoading" />
