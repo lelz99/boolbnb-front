@@ -62,10 +62,6 @@ export default {
         },
 
         selectAddress(address) {
-            this.selectedAddress = address;
-            this.latitude = address.lat; // Aggiorna la latitudine nel dato Vue.js
-            this.longitude = address.lon; // Aggiorna la longitudine nel dato Vue.js
-            this.addressTerm = address.address; // Compila l'input dell'indirizzo con l'indirizzo selezionato
             store.selectedAddress = address;
             store.latitude = address.lat; // Aggiorna la latitudine nel dato Vue.js
             store.longitude = address.lon; // Aggiorna la longitudine nel dato Vue.js
