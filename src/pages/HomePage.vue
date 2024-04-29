@@ -83,15 +83,13 @@ export default {
         params: {
           latitude: store.latitude,
           longitude: store.longitude,
-          radius: store.distanceRadius,
+          radius: this.distanceRadius,
         }
       })
         .then(response => {
           this.apartments = response.data;
           store.apartments = this.apartments;
           store.distanceRadius = this.distanceRadius;
-          // console.log(this.apartments);
-          console.log(store.apartments);
         })
         .catch(error => {
           console.error('Errore durante il recupero degli appartamenti:', error);
