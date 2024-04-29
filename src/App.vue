@@ -14,7 +14,7 @@ export default {
 
 <template>  
   <AppHeader/>
-  <main class="container mt-4">
+  <main class="container-sm container-md container-lg container-xl container-xxl mt-4">
     <RouterView/>
   </main>
 

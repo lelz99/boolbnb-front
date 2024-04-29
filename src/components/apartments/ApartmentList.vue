@@ -9,7 +9,7 @@ export default {
 </script>
 <template>
     <section id="apartments-list">
-        <div v-if="apartments.length">
+        <div v-if="apartments.length" class="row">
             <ApartmentCard v-for="apartment in apartments" :key="apartment.id" :apartment="apartment"/>
         </div>
         <h3 v-else>Non ci sono appartamenti</h3>
