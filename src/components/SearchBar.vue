@@ -4,11 +4,11 @@ export default {
     props: {
         searchTerm: String,
         suggestions: Array,
-        distanceRadius: Number,
+        distanceRadius: String,
         modelValue: String,
         selectedAddress: Object
     },
-    emits: ['suggest', ['update:modelValue'], ['update:dkistanceRadius'], 'selectAddress', 'distanceRadius', 'submitForm'],
+    emits: ['suggest', ['update:modelValue'], ['update:distanceRadius'], 'selectAddress', 'distanceRadius', 'submitForm'],
     methods: {
         handleInput(event) {
             // Emit per aggiornare il modello
@@ -20,9 +20,6 @@ export default {
         handleInputDistance(e) {
             // Emit per aggiornare il modello
             this.$emit('update:distanceRadius', e.target.value)
-
-            // Emit per un altro evento
-            this.$emit('disanceRadius')
         }
     }
 

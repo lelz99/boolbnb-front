@@ -23,8 +23,8 @@ export default {
       selectedAddress: {}, // Indirizzo selezionato
       latitude: '', // Latitudine selezionata
       longitude: '', // Longitudine selezionata
-      distanceRadius: 20, // Imposta un valore predefinito per il raggio di distanza (20 km)
-      //timeout: null, // Timeout per ritardare le richieste
+      distanceRadius: '20', // Imposta un valore predefinito per il raggio di distanza (20 km)
+      timeout: null, // Timeout per ritardare le richieste
     }
   },
   methods: {
