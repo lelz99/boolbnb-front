@@ -4,13 +4,14 @@ import ApartmentCard from '../components/apartments/ApartmentCard.vue';
 import ApartmentList from '../components/apartments/ApartmentList.vue';
 import AppLoader from '../components/AppLoader.vue';
 import AppAlert from '../components/AppAlert.vue';
+import { store } from '../data/store';
 
 const baseUri = 'http://localhost:8000/api/';
 
 
 export default {
   name: 'HomePage',
-  components: {ApartmentCard, ApartmentList, AppAlert},
+  components: { ApartmentCard, ApartmentList, AppAlert },
   data() {
     return {
       apartmentsList: [],
@@ -75,12 +76,15 @@ export default {
         params: {
           latitude: this.latitude,
           longitude: this.longitude,
-          radius: this.distanceRadius
+          radius: this.distanceRadius,
         }
       })
         .then(response => {
           this.apartments = response.data;
-          console.log(this.apartments)
+          store.apartments = this.apartments;
+          store.distanceRadius = this.distanceRadius;
+          // console.log(this.apartments);
+          console.log(store.apartments);
         })
         .catch(error => {
           console.error('Errore durante il recupero degli appartamenti:', error);
@@ -90,20 +94,20 @@ export default {
     fetchApartments() {
       this.isLoading = true;
       axios.get(baseUri + 'apartments/')
-      .then(res => { 
-        this.apartmentsList = res.data;
-        this.isAlertOpen = false;
-      })
-      .catch(err => {
-        console.error(err);
-        this.isAlertOpen = true;
-      }).then(()=>{
-        this.isLoading = false;
-      })
+        .then(res => {
+          this.apartmentsList = res.data;
+          this.isAlertOpen = false;
+        })
+        .catch(err => {
+          console.error(err);
+          this.isAlertOpen = true;
+        }).then(() => {
+          this.isLoading = false;
+        })
     }
   },
 
-  created(){
+  created() {
     this.fetchApartments()
   }
 }
@@ -135,7 +139,7 @@ export default {
       </ul>
     </div>
   </div>
-    <AppAlert :show="isAlertOpen" @close="isAlertOpen = false"/>
-    <AppLoader v-if="isLoading"/>
-    <ApartmentList v-else :apartments="apartmentsList"/>
+  <AppAlert :show="isAlertOpen" @close="isAlertOpen = false" />
+  <AppLoader v-if="isLoading" />
+  <ApartmentList v-else :apartments="apartmentsList" />
 </template>
