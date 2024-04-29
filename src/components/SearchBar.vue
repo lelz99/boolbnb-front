@@ -38,8 +38,8 @@ export default {
                         :value="distanceRadius" @input="handleInputDistance">
                     <span>{{ distanceRadius }} km</span>
                 </div>
-                <button class="btn btn-primary" @click="$emit('submitForm')"><i class="fas fa-search"></i></button>
                 <router-link :to="{ name: 'filter' }">
+                    <button class="btn btn-primary" @click="$emit('submitForm')"><i class="fas fa-search"></i></button>
                 </router-link>
             </div>
 

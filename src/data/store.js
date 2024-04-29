@@ -10,6 +10,7 @@ export const store = reactive({
     latitude: '', // Latitudine selezionata
     longitude: '', // Longitudine selezionata
     distanceRadius: 20,
-    address: ''
+    address: '',
+    selectedAddress: ''
 
 })
