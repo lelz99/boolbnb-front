@@ -68,6 +68,7 @@ export default {
       this.latitude = address.lat; // Aggiorna la latitudine nel dato Vue.js
       this.longitude = address.lon; // Aggiorna la longitudine nel dato Vue.js
       this.addressTerm = address.address; // Compila l'input dell'indirizzo con l'indirizzo selezionato
+      this.suggestions = [];
     },
 
     submitForm() {
@@ -126,8 +127,8 @@ export default {
           <span>{{ distanceRadius }} km</span>
         </div>
         <router-link :to="{ name: 'filter' }">
+          <button class="btn btn-primary" @click="submitForm"><i class="fas fa-search"></i></button>
         </router-link>
-        <button class="btn btn-primary" @click="submitForm"><i class="fas fa-search"></i></button>
       </div>
 
 

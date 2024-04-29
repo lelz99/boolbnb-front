@@ -21,14 +21,14 @@ export default {
             selectedAddress: {}, // Indirizzo selezionato
             latitude: '', // Latitudine selezionata
             longitude: '', // Longitudine selezionata
-            distanceRadius: 20, // Imposta un valore predefinito per il raggio di distanza (20 km)
+            // distanceRadius: 20, // Imposta un valore predefinito per il raggio di distanza (20 km)
             timeout: null, // Timeout per ritardare le richieste
         }
     },
     methods: {
         suggestAddresses() {
-            if (!this.addressTerm.trim()) {
-                this.suggestions = [];
+            if (!store.addressTerm.trim()) {
+                store.suggestions = [];
                 return;
             }
 
@@ -39,7 +39,7 @@ export default {
 
             // Avvia un timeout per ritardare l'esecuzione della richiesta
             this.timeout = setTimeout(() => {
-                axios.get('https://api.tomtom.com/search/2/geocode/' + this.addressTerm.trim() + '.json', {
+                axios.get('https://api.tomtom.com/search/2/geocode/' + store.addressTerm.trim() + '.json', {
                     params: {
                         key: 'vDGqRtusGtGdJKA6KXnnnRPK44NG2Uwn',
                         limit: 5,
@@ -109,11 +109,12 @@ export default {
     },
 
     created() {
-        if (store.apartments) {
-            this.submitForm();
-        } else {
-            this.fetchApartments();
-        }
+        // if (store.apartments) {
+        //     this.submitForm();
+        // } else {
+        //     this.fetchApartments();
+        // }
+        this.fetchApartments();
         console.log(store.apartments);
     },
     // mounted() {
@@ -128,7 +129,7 @@ export default {
         <div class="mb-3">
             <label for="address" class="form-label">Cerca appartamenti</label>
             <div class="d-flex gap-3">
-                <input type="text" class="form-control" id="address" name="address" v-model="addressTerm"
+                <input type="text" class="form-control" id="address" name="address" v-model="store.addressTerm"
                     @input="suggestAddresses">
                 <div>
                     <input type="range" class="form-range" id="radius" name="radius" min="20" max="60" step="10"
@@ -152,7 +153,7 @@ export default {
     </div>
     <AppAlert :show="store.isAlertOpen" @close="store.isAlertOpen = false" />
     <AppLoader v-if="store.isLoading" />
-    <ApartmentList v-else :apartments="store.apartmentsList" />
+    <ApartmentList v-else :apartments="store.apartments" />
 </template>
 
 <style scoped></style>

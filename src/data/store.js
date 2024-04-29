@@ -6,7 +6,7 @@ export const store = reactive({
     baseUri: 'http://localhost:8000/api/',
     isLoading: false,
     isAlertOpen: false,
-    // addressTerm:''
+    addressTerm: '',
     latitude: '', // Latitudine selezionata
     longitude: '', // Longitudine selezionata
     distanceRadius: 20,
