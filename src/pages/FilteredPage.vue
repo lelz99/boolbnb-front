@@ -12,16 +12,7 @@ export default {
     data() {
         return {
             store,
-            //   apartmentsList: [],
-            //   isLoading: false,
-            //   isAlertOpen: false,
-            apartments: store.apartments,
-            addressTerm: '', // Input dell'utente
             suggestions: [], // Array per memorizzare gli indirizzi suggeriti
-            selectedAddress: {}, // Indirizzo selezionato
-            latitude: '', // Latitudine selezionata
-            longitude: '', // Longitudine selezionata
-            // distanceRadius: 20, // Imposta un valore predefinito per il raggio di distanza (20 km)
             timeout: null, // Timeout per ritardare le richieste
         }
     },
@@ -58,14 +49,15 @@ export default {
                         console.error(error);
                         this.suggestions = [];
                     });
-            }, 500); // Ritardo di 500 millisecondi tra le richieste
+            }, 500);
         },
 
         selectAddress(address) {
             store.selectedAddress = address;
-            store.latitude = address.lat; // Aggiorna la latitudine nel dato Vue.js
-            store.longitude = address.lon; // Aggiorna la longitudine nel dato Vue.js
-            store.addressTerm = address.address; // Compila l'input dell'indirizzo con l'indirizzo selezionato
+            store.latitude = address.lat;
+            store.longitude = address.lon;
+            store.addressTerm = address.address;
+            this.suggestions = [];
         },
 
         submitForm() {
@@ -121,6 +113,8 @@ export default {
 </script>
 
 <template>
+
+    <h1>PAGINA FILTRO</h1>
     <div class="col-12">
         <div class="mb-3">
             <label for="address" class="form-label">Cerca appartamenti</label>

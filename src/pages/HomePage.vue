@@ -65,19 +65,24 @@ export default {
     },
 
     selectAddress(address) {
-      this.selectedAddress = address;
-      this.latitude = address.lat; // Aggiorna la latitudine nel dato Vue.js
-      this.longitude = address.lon; // Aggiorna la longitudine nel dato Vue.js
-      this.addressTerm = address.address; // Compila l'input dell'indirizzo con l'indirizzo selezionato
+      // this.selectedAddress = address;
+      store.selectedAddress = address;
+      // this.latitude = address.lat; // Aggiorna la latitudine nel dato Vue.js
+      store.latitude = address.lat; // Aggiorna la latitudine nel dato Vue.js
+      // this.longitude = address.lon; // Aggiorna la longitudine nel dato Vue.js
+      store.longitude = address.lon; // Aggiorna la longitudine nel dato Vue.js
+      // this.addressTerm = address.address; // Compila l'input dell'indirizzo con l'indirizzo selezionato
+      store.addressTerm = address.address; // Compila l'input dell'indirizzo con l'indirizzo selezionato
       this.suggestions = [];
+      // store.selectedAddress = address;
     },
 
     submitForm() {
       // Effettua una chiamata API al tuo endpoint Laravel
       axios.get(`http://localhost:8000/api/apartments/search`, {
         params: {
-          latitude: this.latitude,
-          longitude: this.longitude,
+          latitude: store.latitude,
+          longitude: store.longitude,
           radius: this.distanceRadius,
         }
       })
@@ -85,8 +90,6 @@ export default {
           this.apartments = response.data;
           store.apartments = this.apartments;
           store.distanceRadius = this.distanceRadius;
-          // console.log(this.apartments);
-          console.log(store.apartments);
         })
         .catch(error => {
           console.error('Errore durante il recupero degli appartamenti:', error);
@@ -116,6 +119,8 @@ export default {
 </script>
 
 <template>
+  <h1>PAGINA HOMEPAGE</h1>
+
   <div class="col-12">
     <!-- Ricerca -->
     <SearchBar @selectAddress="selectAddress" @suggest="suggestAddresses" :suggestions='suggestions'
