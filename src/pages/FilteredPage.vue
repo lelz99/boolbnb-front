@@ -14,6 +14,8 @@ export default {
             store,
             suggestions: [], // Array per memorizzare gli indirizzi suggeriti
             timeout: null, // Timeout per ritardare le richieste
+            addressSelected: false, // Flag per tenere traccia dello stato di selezione dell'indirizzo
+            addressError: false // Flag per indicare se c'è un errore nell'indirizzo inserito
         }
     },
     methods: {
@@ -58,27 +60,36 @@ export default {
             store.longitude = address.lon;
             store.addressTerm = address.address;
             this.suggestions = [];
+            this.addressSelected = true; // Imposta il flag addressSelected su true
         },
 
         submitForm() {
-            // Effettua una chiamata API al tuo endpoint Laravel
-            axios.get(`http://localhost:8000/api/apartments/search`, {
-                params: {
-                    latitude: store.latitude,
-                    longitude: store.longitude,
-                    radius: store.distanceRadius
-                }
-            })
-                .then(response => {
-                    // this.apartments = response.data;
-                    store.apartments = response.data;
-                    // console.log(this.apartments);
-                    console.log(store.apartments);
-                })
-                .catch(error => {
-                    console.error('Errore durante il recupero degli appartamenti:', error);
-                });
-        },
+        // Verifica se è stato selezionato un indirizzo valido
+        if (!store.selectedAddress || store.selectedAddress.address !== store.addressTerm.trim()) {
+             // Imposta il flag addressError su true per mostrare il messaggio di errore
+            this.addressError = true;
+            return; // Esce dalla funzione se l'indirizzo non corrisponde
+        }
+        // Azzera il flag addressError se non ci sono errori
+        this.addressError = false;
+
+        // Effettua una chiamata API al tuo endpoint Laravel
+        axios.get(`http://localhost:8000/api/apartments/search`, {
+            params: {
+                latitude: store.latitude,
+                longitude: store.longitude,
+                radius: store.distanceRadius
+            }
+        })
+        .then(response => {
+            // Aggiorna lo stato degli appartamenti con i dati ricevuti dalla risposta
+            store.apartments = response.data;
+            console.log(store.apartments);
+        })
+        .catch(error => {
+            console.error('Errore durante il recupero degli appartamenti:', error);
+        });
+    },
 
         fetchApartments() {
             store.isLoading = true;
@@ -133,7 +144,7 @@ export default {
             </div>
             </div>
             
-
+            <div v-if="addressError" class="text-danger">Seleziona un indirizzo tra quelli suggeriti.</div>
 
 
             <ul id="suggestions-list" class="p-2 mt-3 bg-light rounded" v-show="suggestions.length > 0">
