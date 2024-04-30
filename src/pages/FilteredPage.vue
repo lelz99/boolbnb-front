@@ -17,6 +17,7 @@ export default {
             addressSelected: false, // Flag per tenere traccia dello stato di selezione dell'indirizzo
             addressError: false, // Flag per indicare se c'è un errore nell'indirizzo inserito
             services: [],
+            filterService: [],
         }
     },
     methods: {
@@ -80,6 +81,7 @@ export default {
                     latitude: store.latitude,
                     longitude: store.longitude,
                     radius: store.distanceRadius,
+                    services: this.filterService,
                 }
             })
                 .then(response => {
@@ -175,6 +177,7 @@ export default {
                             :value="service.id">
                         <div class="checkmark"></div>
                         <label class="form-check-label" :for="service.id" role="button">
+                            <i :class="service.icon" class="mx-2"></i>
                             {{ service.label }}
                         </label>
                     </label>
