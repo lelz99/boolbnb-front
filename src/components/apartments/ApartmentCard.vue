@@ -50,7 +50,7 @@ export default {
             <div class="card-body">
                 <h5 class="mt-3">{{ apartment.title }}</h5>
                 <p class="mb-2">{{ apartment.address }}</p>
-                <p class="mb-2">{{ roundedDistance }} km</p>
+                <p v-show="apartment.distance" class="mb-2">{{ roundedDistance }} km</p>
                 <ul class="card-services" @mouseover="handleMouseOver">
                     <li v-for="service in apartment.services" :key="service.id"><i :class="service.icon"></i></li>
                 </ul>
