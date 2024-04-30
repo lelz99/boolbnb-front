@@ -61,6 +61,15 @@ export default {
         },
 
         submitForm() {
+            if (!store.selectedAddress) {
+                // Imposta il flag per mostrare il messaggio di avviso
+                store.isAddressNotSelected = true;
+                return;
+            }
+
+            // Resetta il flag quando l'utente seleziona un indirizzo valido
+            store.isAddressNotSelected = false;
+
             // Effettua una chiamata API al tuo endpoint Laravel
             axios.get(`http://localhost:8000/api/apartments/search`, {
                 params: {
@@ -69,16 +78,17 @@ export default {
                     radius: store.distanceRadius
                 }
             })
-                .then(response => {
-                    // this.apartments = response.data;
-                    store.apartments = response.data;
-                    // console.log(this.apartments);
-                    console.log(store.apartments);
-                })
-                .catch(error => {
-                    console.error('Errore durante il recupero degli appartamenti:', error);
-                });
+            .then(response => {
+                // this.apartments = response.data;
+                store.apartments = response.data;
+                // console.log(this.apartments);
+                console.log(store.apartments);
+            })
+            .catch(error => {
+                console.error('Errore durante il recupero degli appartamenti:', error);
+            });
         },
+
 
         fetchApartments() {
             store.isLoading = true;
@@ -102,6 +112,8 @@ export default {
         // } else {
         //     this.fetchApartments();
         // }
+        // Inizializza il flag per il controllo della selezione dell'indirizzo
+    store.isAddressNotSelected = false;
         this.fetchApartments();
         console.log(store.apartments);
     },
@@ -121,6 +133,7 @@ export default {
                 <div class="input-group">
                 <input type="text" class="form-control" id="address" name="address" v-model="store.addressTerm"
                     @input="suggestAddresses">
+                    
                     <router-link :to="{ name: 'filter' }" class="input-group-text">
                         <button class="btn text-primary" @click="submitForm"><i class="fas fa-search fa-xl"></i></button>
                 </router-link>
@@ -132,7 +145,9 @@ export default {
                     <div class="w-100 text-center">{{ store.distanceRadius }} km</div>
             </div>
             </div>
-            
+            <div v-if="store.isAddressNotSelected" class="alert alert-danger mt-2">
+                Seleziona un indirizzo suggerito prima di effettuare la ricerca.
+            </div>
 
 
 
