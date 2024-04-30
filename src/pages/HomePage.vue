@@ -72,7 +72,7 @@ export default {
       // this.longitude = address.lon; // Aggiorna la longitudine nel dato Vue.js
       store.longitude = address.lon; // Aggiorna la longitudine nel dato Vue.js
       // this.addressTerm = address.address; // Compila l'input dell'indirizzo con l'indirizzo selezionato
-      store.addressTerm = address.address; // Compila l'input dell'indirizzo con l'indirizzo selezionato
+      this.addressTerm = address.address; // Compila l'input dell'indirizzo con l'indirizzo selezionato
       this.suggestions = [];
       // store.selectedAddress = address;
     },
