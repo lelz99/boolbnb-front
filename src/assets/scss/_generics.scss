@@ -1,9 +1,15 @@
-ul{
+body {
+    font-family: "Montserrat", sans-serif;
+    background: rgb(23, 43, 161);
+    background: linear-gradient(180deg, rgba(23, 43, 161, 1) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+ul {
     list-style-type: none;
     padding: 0;
 }
 
-.pointer{
+.pointer {
     cursor: pointer;
 }
 
@@ -11,6 +17,6 @@ ul{
     transition: background-color 0.3s ease;
 }
 
-#suggestions-list li:hover{
+#suggestions-list li:hover {
     background-color: lightblue;
 }

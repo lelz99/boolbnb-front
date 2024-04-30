@@ -73,6 +73,7 @@ export default {
       store.longitude = address.lon; // Aggiorna la longitudine nel dato Vue.js
       // this.addressTerm = address.address; // Compila l'input dell'indirizzo con l'indirizzo selezionato
       this.addressTerm = address.address; // Compila l'input dell'indirizzo con l'indirizzo selezionato
+      store.addressTerm = address.address;
       this.suggestions = [];
       // store.selectedAddress = address;
     },
@@ -119,7 +120,7 @@ export default {
 </script>
 
 <template>
-  <h1>PAGINA HOMEPAGE</h1>
+  <h1 class="text-light">Quale sarà la tua prossima meta?</h1>
 
   <div class="col-12">
     <!-- Ricerca -->

@@ -39,7 +39,7 @@ export default {
                     </router-link>
                 </div>
                 
-                <div>
+                <div class="text-light">
                     <label for="radius" class="w-100 text-center">Distanza</label>
                     <input type="range" class="form-range" id="radius" name="radius" min="20" max="60" step="10"
                         :value="distanceRadius" @input="handleInputDistance">
