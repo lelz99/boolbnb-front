@@ -31,8 +31,7 @@ export default {
         <div class="mb-3">
             <div class="d-flex gap-3 align-items-center">
                 <div class="input-group">
-                    <input type="text" class="form-control " id="address" name="address" :value="modelValue"
-                        @input="handleInput">
+                    <input type="text" class="form-control " id="address" name="address" :value="modelValue" @input="handleInput" placeholder="Cerca...">                      
                 
                     <router-link :to="{ name: 'filter' }" class="input-group-text">
                         <button class="btn text-primary" @click="$emit('submitForm')"><i class="fas fa-search fa-xl"></i></button>
