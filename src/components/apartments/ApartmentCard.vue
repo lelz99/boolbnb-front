@@ -1,4 +1,6 @@
 <script>
+import { computed } from 'vue';
+
 export default {
     name: 'ApartmentCard',
     props: { apartment: Object },
@@ -28,6 +30,11 @@ export default {
             };
             scroll();
         }
+    },
+    computed: {
+        roundedDistance() {
+            return parseFloat(this.apartment.distance).toFixed(2);
+        }
     }
 }
 </script>
@@ -36,14 +43,15 @@ export default {
     <div class="col-sm-12 col-lg-6 col-xl-3 col-xl-2 my-4">
         <div class="card card-apartment p-3">
             <figure>
-                <img class="card-image card-img-top img-fluid rounded" :src="apartment.cover_image" :alt="apartment.title">
+                <img class="card-image card-img-top img-fluid rounded" :src="apartment.cover_image"
+                    :alt="apartment.title">
             </figure>
-                
+
             <div class="card-body">
                 <h5 class="mt-3">{{ apartment.title }}</h5>
                 <p class="mb-2">{{ apartment.address }}</p>
-                <ul class="card-services"
-                    @mouseover="handleMouseOver">
+                <p class="mb-2">{{ roundedDistance }} km</p>
+                <ul class="card-services" @mouseover="handleMouseOver">
                     <li v-for="service in apartment.services" :key="service.id"><i :class="service.icon"></i></li>
                 </ul>
             </div>
@@ -68,15 +76,14 @@ export default {
     .card-services {
         display: flex;
         gap: 16px;
-        overflow-x: hidden; /* Nasconde la scrollbar */
+        overflow-x: hidden;
+        /* Nasconde la scrollbar */
         white-space: nowrap;
     }
 
-    .card-body{
+    .card-body {
         height: 200px;
-    overflow-y: auto;
+        overflow-y: auto;
     }
 }
-
-
 </style>
