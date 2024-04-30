@@ -29,18 +29,22 @@ export default {
 <template>
     <div class="col-12">
         <div class="mb-3">
-            <label for="address" class="form-label">Cerca appartamenti</label>
-            <div class="d-flex gap-3">
-                <input type="text" class="form-control" id="address" name="address" :value="modelValue"
-                    @input="handleInput">
+            <div class="d-flex gap-3 align-items-center">
+                <div class="input-group">
+                    <input type="text" class="form-control " id="address" name="address" :value="modelValue"
+                        @input="handleInput">
+                
+                    <router-link :to="{ name: 'filter' }" class="input-group-text">
+                        <button class="btn text-primary" @click="$emit('submitForm')"><i class="fas fa-search fa-xl"></i></button>
+                    </router-link>
+                </div>
+                
                 <div>
+                    <label for="radius" class="w-100 text-center">Distanza</label>
                     <input type="range" class="form-range" id="radius" name="radius" min="20" max="60" step="10"
                         :value="distanceRadius" @input="handleInputDistance">
-                    <span>{{ distanceRadius }} km</span>
+                    <div class="w-100 text-center">{{ distanceRadius }} km</div>
                 </div>
-                <router-link :to="{ name: 'filter' }">
-                    <button class="btn btn-primary" @click="$emit('submitForm')"><i class="fas fa-search"></i></button>
-                </router-link>
             </div>
 
 
