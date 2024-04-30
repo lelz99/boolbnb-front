@@ -82,6 +82,8 @@ export default {
                     longitude: store.longitude,
                     radius: store.distanceRadius,
                     services: this.filterService,
+                    beds: store.beds,
+                    rooms: store.rooms,
                 }
             })
                 .then(response => {
@@ -137,54 +139,74 @@ export default {
 <template>
 
     <h1 class="text-light">Ricerca avanzata</h1>
-    <div class="col-12">
-        <div class="mb-3 ">
-            <div class="d-flex gap-3 align-items-center">
-                <div class="input-group">
-                    <input type="text" class="form-control" id="address" name="address" v-model="store.addressTerm"
-                        @input="suggestAddresses">
-                    <router-link :to="{ name: 'filter' }" class="input-group-text">
-                        <button class="btn text-primary" @click="submitForm"><i
-                                class="fas fa-search fa-xl"></i></button>
-                    </router-link>
+    <div class="row">
+
+        <div class="col-12">
+            <div class="mb-3 ">
+                <div class="d-flex gap-3 align-items-center">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="address" name="address" v-model="store.addressTerm"
+                            @input="suggestAddresses">
+                        <router-link :to="{ name: 'filter' }" class="input-group-text">
+                            <button class="btn text-primary" @click="submitForm"><i
+                                    class="fas fa-search fa-xl"></i></button>
+                        </router-link>
+                    </div>
+                    <div class="text-light">
+                        <label for="radius" class="w-100 text-center">Distanza</label>
+                        <input type="range" class="form-range" id="radius" name="radius" min="5" max="30" step="5"
+                            v-model.number="store.distanceRadius">
+                        <div class="w-100 text-center">{{ store.distanceRadius }} km</div>
+                    </div>
                 </div>
-                <div class="text-light">
-                    <label for="radius" class="w-100 text-center">Distanza</label>
-                    <input type="range" class="form-range" id="radius" name="radius" min="5" max="30" step="5"
-                        v-model.number="store.distanceRadius">
-                    <div class="w-100 text-center">{{ store.distanceRadius }} km</div>
-                </div>
+
+                <div v-if="addressError" class="text-danger">Seleziona un indirizzo tra quelli suggeriti.</div>
+
+
+                <ul id="suggestions-list" class="p-2 mt-3 bg-light rounded" v-show="suggestions.length > 0">
+                    <li v-for="suggestion in suggestions" :key="suggestion.lat + suggestion.lon"
+                        @click="selectAddress(suggestion)">
+                        <i class="fa-solid fa-location-dot text-primary"></i> {{ suggestion.address }}
+                    </li>
+                </ul>
             </div>
-
-            <div v-if="addressError" class="text-danger">Seleziona un indirizzo tra quelli suggeriti.</div>
-
-
-            <ul id="suggestions-list" class="p-2 mt-3 bg-light rounded" v-show="suggestions.length > 0">
-                <li v-for="suggestion in suggestions" :key="suggestion.lat + suggestion.lon"
-                    @click="selectAddress(suggestion)">
-                    <i class="fa-solid fa-location-dot text-primary"></i> {{ suggestion.address }}
-                </li>
-            </ul>
         </div>
-    </div>
 
-    <div class="col-12">
-        <div class="mt-3">
-            <div class="row form-group">
-                <div v-for="service in services" :key="service.id" class="form-check form-check-inline col-3">
-                    <label class="check-container d-flex align-items-center">
-                        <input class="form-check-input" type="checkbox" :id="service.id" v-model="filterService"
-                            :value="service.id">
-                        <div class="checkmark"></div>
-                        <label class="form-check-label" :for="service.id" role="button">
-                            <i :class="service.icon" class="mx-2"></i>
-                            {{ service.label }}
+        <div class="col-12">
+            <div class="mt-3">
+                <div class="row form-group">
+                    <div v-for="service in services" :key="service.id" class="form-check form-check-inline col-3">
+                        <label class="check-container d-flex align-items-center">
+                            <input class="form-check-input" type="checkbox" :id="service.id" v-model="filterService"
+                                :value="service.id">
+                            <div class="checkmark"></div>
+                            <label class="form-check-label" :for="service.id" role="button">
+                                <i :class="service.icon" class="mx-2"></i>
+                                {{ service.label }}
+                            </label>
                         </label>
-                    </label>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <div class="col-12 mt-3">
+            <div class="row">
+
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="beds" class="form-label">Numero Letti</label>
+                        <input type="number" min="1" class="form-control" id="beds" v-model="store.beds">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="rooms" class="form-label">Numero Stanze</label>
+                        <input type="number" class="form-control" id="rooms" v-model="store.rooms" min="1">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <AppAlert :show="store.isAlertOpen" @close="store.isAlertOpen = false" />

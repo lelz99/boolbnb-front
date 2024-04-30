@@ -54,6 +54,10 @@ export default {
                 <ul class="card-services" @mouseover="handleMouseOver">
                     <li v-for="service in apartment.services" :key="service.id"><i :class="service.icon"></i></li>
                 </ul>
+                <ul class="d-flex gap-3">
+                    <li><i class="fa-solid fa-door-closed"></i> {{ apartment.rooms }}</li>
+                    <li><i class="fa-solid fa-bed"></i> {{ apartment.beds }}</li>
+                </ul>
             </div>
         </div>
     </div>

@@ -11,6 +11,7 @@ export const store = reactive({
     longitude: '', // Longitudine selezionata
     distanceRadius: 20,
     address: '',
-    selectedAddress: ''
-
+    selectedAddress: '',
+    beds: '1',
+    rooms: '1',
 })

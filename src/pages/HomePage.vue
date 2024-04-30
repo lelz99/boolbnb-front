@@ -85,6 +85,8 @@ export default {
           latitude: store.latitude,
           longitude: store.longitude,
           radius: this.distanceRadius,
+          beds: store.beds,
+          rooms: store.rooms,
         }
       })
         .then(response => {
