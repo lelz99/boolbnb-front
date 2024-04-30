@@ -20,9 +20,6 @@ export default {
                     <li class="nav-item">
                         <router-link class="nav-link" :to="{ name: 'home' }">Home</router-link>
                     </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" :to="{ name: 'filter' }">Ricerca Avanzata</router-link>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -30,8 +27,13 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.nav-logo{
+nav{
     height: 70px;
+    
+    .nav-logo{
+        height: 50px;
+    }
 }
+
 </style>
 

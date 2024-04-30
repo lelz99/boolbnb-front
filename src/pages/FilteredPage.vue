@@ -127,7 +127,7 @@ export default {
             </div>
             <div class="text-light"> 
                     <label for="radius" class="w-100 text-center">Distanza</label>
-                    <input type="range" class="form-range" id="radius" name="radius" min="20" max="60" step="10"
+                    <input type="range" class="form-range" id="radius" name="radius" min="5" max="30" step="5"
                         v-model.number="store.distanceRadius">
                     <div class="w-100 text-center">{{ store.distanceRadius }} km</div>
             </div>
