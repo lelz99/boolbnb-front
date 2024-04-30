@@ -71,5 +71,12 @@ export default {
         overflow-x: hidden; /* Nasconde la scrollbar */
         white-space: nowrap;
     }
+
+    .card-body{
+        height: 200px;
+    overflow-y: auto;
+    }
 }
+
+
 </style>

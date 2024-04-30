@@ -114,22 +114,25 @@ export default {
 
 <template>
 
-    <h1>PAGINA FILTRO</h1>
+    <h1 class="text-light">Ricerca avanzata</h1>
     <div class="col-12">
-        <div class="mb-3">
-            <label for="address" class="form-label">Cerca appartamenti</label>
-            <div class="d-flex gap-3">
+        <div class="mb-3 ">
+            <div class="d-flex gap-3 align-items-center">
+                <div class="input-group">
                 <input type="text" class="form-control" id="address" name="address" v-model="store.addressTerm"
                     @input="suggestAddresses">
-                <div>
+                    <router-link :to="{ name: 'filter' }" class="input-group-text">
+                        <button class="btn text-primary" @click="submitForm"><i class="fas fa-search fa-xl"></i></button>
+                </router-link>
+            </div>
+            <div class="text-light"> 
+                    <label for="radius" class="w-100 text-center">Distanza</label>
                     <input type="range" class="form-range" id="radius" name="radius" min="20" max="60" step="10"
                         v-model.number="store.distanceRadius">
-                    <span>{{ store.distanceRadius }} km</span>
-                </div>
-                <router-link :to="{ name: 'filter' }">
-                </router-link>
-                <button class="btn btn-primary" @click="submitForm"><i class="fas fa-search"></i></button>
+                    <div class="w-100 text-center">{{ store.distanceRadius }} km</div>
             </div>
+            </div>
+            
 
 
 
