@@ -8,7 +8,7 @@ export default {
 <template>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="#"><img src="/Boolbnb-logo-nobg.png" alt="Boolbnb logo" class="nav-logo"></a>
 
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -18,10 +18,10 @@ export default {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <router-link class="nav-link" :to="{ name: 'home' }">HomePage</router-link>
+                        <router-link class="nav-link" :to="{ name: 'home' }">Home</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" :to="{ name: 'filter' }">Filtro</router-link>
+                        <router-link class="nav-link" :to="{ name: 'filter' }">Ricerca Avanzata</router-link>
                     </li>
                 </ul>
             </div>
@@ -29,5 +29,9 @@ export default {
     </nav>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.nav-logo{
+    height: 70px;
+}
+</style>
 
