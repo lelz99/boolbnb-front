@@ -173,7 +173,7 @@ export default {
         </div>
 
         <div class="col-12">
-            <div class="mt-3">
+            <div class="mt-3 ms-3">
                 <div class="row form-group">
                     <div v-for="service in services" :key="service.id" class="form-check form-check-inline col-3">
                         <label class="check-container d-flex align-items-center">
@@ -181,8 +181,8 @@ export default {
                                 :value="service.id">
                             <div class="checkmark"></div>
                             <label class="form-check-label" :for="service.id" role="button">
-                                <i :class="service.icon" class="mx-2"></i>
-                                {{ service.label }}
+                                <i :class="service.icon" class="mx-2" :title="service.label"></i>
+                                <span class="d-none d-md-inline">{{ service.label }}</span>
                             </label>
                         </label>
                     </div>
@@ -193,13 +193,13 @@ export default {
         <div class="col-12 mt-3">
             <div class="row">
 
-                <div class="col-6">
+                <div class="col-2">
                     <div class="mb-3">
                         <label for="beds" class="form-label">Numero Letti</label>
                         <input type="number" min="1" class="form-control" id="beds" v-model="store.beds">
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-2">
                     <div class="mb-3">
                         <label for="rooms" class="form-label">Numero Stanze</label>
                         <input type="number" class="form-control" id="rooms" v-model="store.rooms" min="1">
