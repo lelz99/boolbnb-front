@@ -6,10 +6,11 @@ import HomePage from "../pages/HomePage.vue";
 
 const router = createRouter({
     history: createWebHistory(),
+    linkExactActiveClass: 'active',
     routes: [
         { path: '/', name: 'home', component: HomePage },
         { path: '/filter', name: 'filter', component: FilteredPage },
-        { path: '/:slug', name: 'Show', component: ShowPage }
+        { path: '/:slug', name: 'show', component: ShowPage }
     ]
 })
 
