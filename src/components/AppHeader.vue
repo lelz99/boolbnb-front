@@ -7,7 +7,7 @@ export default {
 
 <template>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
+        <div class="container">
             <a class="navbar-brand" href="#"><img src="/Boolbnb-logo-nobg.png" alt="Boolbnb logo" class="nav-logo"></a>
 
 
@@ -29,7 +29,14 @@ export default {
 <style lang="scss" scoped>
 nav{
     height: 70px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1;
     
+    .navbar-toggler {
+        z-index: 2; 
+    }
     .nav-logo{
         height: 50px;
     }
