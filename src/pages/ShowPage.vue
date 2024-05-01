@@ -5,13 +5,12 @@ import AppLoader from '../components/AppLoader.vue';
 import AppAlert from '../components/AppAlert.vue';
 
 export default {
-    name: 'FilteredPage',
-    components: { ApartmentCard, ApartmentList, AppAlert },
-    data() {
-        return {
-            store
-        }
-    },
+    name: 'ShowPage',
+    components: { AppLoader, AppAlert },
+    data: () => ({
+        store,
+        apartment: null
+    }),
     methods: {
         test(test) {
             console.log(test);
