@@ -65,6 +65,9 @@ export default {
 
 <style lang="scss" scoped>
 .card-apartment {
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+    
     figure {
         width: 100%;
         height: 300px;
@@ -87,7 +90,18 @@ export default {
 
     .card-body {
         height: 200px;
-        overflow-y: auto;
+        padding-top: 0;
+        // overflow-y: auto;
+        overflow-y: hidden; // Nasconde la scrollbar verticale
+    }
+}
+
+
+// Effetto hover d-md
+@media (min-width: 768px) { // d-md
+    .card-apartment:hover {
+        transform: scale(1.1);
+        cursor: pointer; 
     }
 }
 </style>
