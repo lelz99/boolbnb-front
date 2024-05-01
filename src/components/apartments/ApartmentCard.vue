@@ -42,6 +42,7 @@ export default {
 <template>
     <div class="col-sm-12 col-lg-6 col-xl-3 col-xl-2 my-4">
         <RouterLink :to="`/apartments/${apartment.slug}`">
+            <!-- <RouterLink :to="{name: 'show', params:{slug: apartment.slug}}"> -->
             <div class="card card-apartment p-3">
                 <figure>
                     <img class="card-image card-img-top img-fluid rounded" :src="apartment.cover_image"
