@@ -75,6 +75,8 @@ export default {
         },
         sendForm() {
             store.isLoading = true;
+
+            this.form.apartment_id = this.apartment.id;
             axios.post(messageEndpoint, JSON.stringify(this.form), {
                 headers: {
                     'Content-Type': 'application/json'
