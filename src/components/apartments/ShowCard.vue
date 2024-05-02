@@ -29,8 +29,8 @@ export default {
             </div>
             <!-- bottone indietro -->
             <div class="d-flex justify-content-evenly pb-3">
-                <RouterLink :to="$router.back()" class="btn btn-secondary btn-sm"><i
-                        class="fas fa-arrow-left me-2 d-none d-sm-inline"></i>Indietro</RouterLink>
+                <button @click="$router.back()" class="btn btn-secondary btn-sm"><i
+                        class="fas fa-arrow-left me-2 d-none d-sm-inline"></i>Indietro</button>
                 <!-- bottone invia messaggio -->
                 <a href="#" class="btn btn-primary btn-sm">
                     <i class="fas fa-comments me-2 d-none d-sm-inline"></i>

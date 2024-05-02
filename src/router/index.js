@@ -10,7 +10,7 @@ const router = createRouter({
     routes: [
         { path: '/', name: 'home', component: HomePage },
         { path: '/filter', name: 'filter', component: FilteredPage },
-        { path: '/:slug', name: 'show', component: ShowPage },
+        { path: '/apartments/:slug', name: 'show', component: ShowPage },
 
         { path: '/pathMatch(.*)', redirect: '/' }
     ]

@@ -13,9 +13,6 @@ export default {
         apartment: null
     }),
     methods: {
-        test(test) {
-            console.log(test);
-        },
         getApartment() {
             store.isLoading = true;
             axios.get(store.baseUri + this.$route.params.slug)
@@ -28,7 +25,6 @@ export default {
         // No computed atm
     },
     created() {
-        this.test("test");
         this.getApartment();
     }
 }
@@ -36,7 +32,7 @@ export default {
 
 <template>
     <h1 class="py-3 text-center">SHOW APPARTAMENTO</h1>
-    <AppLoader v-if="isLoading" />
+    <AppLoader v-if="store.isLoading" />
     <ShowCard v-else-if="!store.isLoading && apartment" :apartment="apartment" />
 </template>
 
