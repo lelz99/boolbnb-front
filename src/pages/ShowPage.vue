@@ -14,23 +14,22 @@ export default {
     components: { AppLoader, AppAlert },
     data: () => ({
         store,
-        apartment: null
+        apartment: null,
     }),
     methods: {
         getApartment() {
             store.isLoading = true;
             axios.get(store.baseUri + this.$route.params.slug)
-                .then(res => { this.apartment = res.data })
+                .then(res => {
+                    this.apartment = res.data;
+                })
                 .catch(err => { console.error(err) })
                 .then(() => {
                     store.isLoading = false;
+                    this.mapMarker();
                 });
         },
         mapMarker() {
-
-            if (!this.apartment || this.apartment.latitude === null || this.apartment.longitude === null) {
-                return;
-            }
             const lat = this.apartment.latitude;
             const lng = this.apartment.longitude;
 
@@ -39,12 +38,9 @@ export default {
                 lng: lng
             };
 
-            console.log(yourApartment)
-
             // Predispongo le variabili per mappa
             let map = tt.map({
                 key: API_KEY,
-                // container: document.getElementById('map-div'),
                 container: 'map-div',
                 center: yourApartment,
                 zoom: 13
@@ -70,28 +66,14 @@ export default {
             }
         }
     },
-    computed: {
-        // No computed atm
-    },
     created() {
         this.getApartment();
-    },
-    watch: {
-        apartment: {
-            // immediate: true,
-            handler() {
-                if (this.apartment) {
-                    this.mapMarker();
-                }
-            }
-        }
     }
 }
 </script>
 
 <template>
     <AppLoader v-if="store.isLoading" />
-    <!-- <ShowCard v-else-if="!store.isLoading && apartment" :apartment="apartment" /> -->
     <div v-else-if="!store.isLoading && apartment" class="container" id="show">
         <header class="mt-3">
             <h1 class="text-center m-0">{{ apartment.title }}</h1>
@@ -156,11 +138,6 @@ export default {
         <h3 class="text-center pb-1 mb-3 bottom-border">Dove sarai</h3>
         <div id="map-div"></div>
     </section>
-    <!-- coordinate NASCOSTE per recupero in js -->
-    <div v-if="!store.isLoading && apartment" class="d-none">
-        <p id="latitude-aprtmnt">{{ apartment.latitude }}</p>
-        <p id="longitude-aprtmnt">{{ apartment.longitude }}</p>
-    </div>
 </template>
 
 <style lang="scss">
