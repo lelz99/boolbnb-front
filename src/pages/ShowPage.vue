@@ -8,6 +8,8 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 // import mapMarker from '../data/map-marker';
 
 const API_KEY = '82X2Cl2U4NDmOxA8fgnGKju65G1vKsqh';
+const messageEndpoint = 'http://localhost:8000/api/messages/';
+const defaultForm = { email: '', namesurname: '', message: '' };
 
 export default {
     name: 'ShowPage',
@@ -15,11 +17,9 @@ export default {
     data: () => ({
         store,
         apartment: null,
-        form: {
-            email: '',
-            namesurname: '',
-            message: ''
-        }
+        form: defaultForm,
+        successMessage: null,
+
     }),
     methods: {
         getApartment() {
@@ -72,6 +72,13 @@ export default {
                 `;
                 return markerElement;
             }
+        },
+        sendForm() {
+            store.isLoading = true;
+            axios.post(messageEndpoint, this.form)
+                .then(() => { this.form = { ...defaultForm } })
+                .catch(err => { console.error(err) })
+                .then(() => { store.isLoading = false });
         }
     },
     created() {
@@ -152,17 +159,17 @@ export default {
                 <div class="mb-3">
                     <label for="namesurname" class="form-label">Nome e Cognome<sup class="text-danger">*</sup></label>
                     <input type="text" class="form-control" name="namesurname" id="namesurname"
-                        placeholder="Mario Rossi" v-model="form.namesurname" required>
+                        placeholder="Mario Rossi" v-model.trim="form.namesurname" required>
                 </div>
                 <div class="mb-3">
                     <label for="message-email" class="form-label">Indirizzo Mail<sup class="text-danger">*</sup></label>
                     <input type="email" class="form-control" name="message-email" id="message-email"
-                        placeholder="email@esempio.com" v-model="form.email" required>
+                        placeholder="email@esempio.com" v-model.trim="form.email" required>
                     <small class="form-text text-muted">Ti ricontatteremo a questo indirizzo</small>
                 </div>
                 <div class="mb-3">
                     <label for="message" class="form-label">Corpo del messaggio<sup class="text-danger">*</sup></label>
-                    <textarea class="form-control" name="message" id="message" rows="3" v-model="form.namesurname"
+                    <textarea class="form-control" name="message" id="message" rows="3" v-model.trim="form.message"
                         required></textarea>
                 </div>
                 <button class="btn btn-primary" type="submit">Invia Messaggio</button>
