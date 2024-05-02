@@ -34,7 +34,6 @@ export default {
 </script>
 
 <template>
-    <h1 class="py-3 text-center">SHOW APPARTAMENTO</h1>
     <AppLoader v-if="store.isLoading" />
     <ShowCard v-else-if="!store.isLoading && apartment" :apartment="apartment" />
 </template>
