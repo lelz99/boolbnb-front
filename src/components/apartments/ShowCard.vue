@@ -19,7 +19,7 @@ export default {
         <section id="eye-catcher" class="pb-3">
             <div class="mb-3 row justify-content-center">
                 <div class="row justify-content-center img-container col-lg-8 overflow-hidden">
-                    <img :src="apartment.img" :alt="apartment.title">
+                    <img :src="apartment.cover_image" :alt="apartment.title">
                 </div>
                 <!-- descrizione a comparsa in large -->
                 <div id="description" class="d-none d-lg-block col-lg-4 pt-1 ps-4">
