@@ -3,7 +3,7 @@ import { reactive } from "vue";
 export const store = reactive({
     apartmentsList: [],
     apartments: [],
-    baseUri: 'http://localhost:8000/api/',
+    baseUri: 'http://localhost:8000/api/apartments/',
     isLoading: false,
     isAlertOpen: false,
     addressTerm: '',

@@ -41,26 +41,28 @@ export default {
 
 <template>
     <div class="col-sm-12 col-lg-6 col-xl-3 col-xl-2 my-4">
-        <div class="card card-apartment p-3">
-            <figure>
-                <img class="card-image card-img-top img-fluid rounded" :src="apartment.cover_image"
-                    :alt="apartment.title">
-                <span v-if="apartment.sponsorship_id" class="badge badge-danger">Sponsorizzato</span>
-            </figure>
-
-            <div class="card-body">
-                <h5 class="mt-3">{{ apartment.title }}</h5>
-                <p class="mb-2">{{ apartment.address }}</p>
-                <p v-show="apartment.distance" class="mb-2">{{ roundedDistance }} km</p>
-                <ul class="card-services" @mouseover="handleMouseOver">
-                    <li v-for="service in apartment.services" :key="service.id"><i :class="service.icon"></i></li>
-                </ul>
-                <ul class="d-flex gap-3">
-                    <li><i class="fa-solid fa-door-closed"></i> {{ apartment.rooms }}</li>
-                    <li><i class="fa-solid fa-bed"></i> {{ apartment.beds }}</li>
-                </ul>
+        <RouterLink :to="`/apartments/${apartment.slug}`">
+            <!-- <RouterLink :to="{name: 'show', params:{slug: apartment.slug}}"> -->
+            <div class="card card-apartment p-3">
+                <figure>
+                    <img class="card-image card-img-top img-fluid rounded" :src="apartment.cover_image"
+                        :alt="apartment.title">
+                        <span v-if="apartment.sponsorship_id" class="badge badge-danger">Sponsorizzato</span>
+                </figure>
+                <div class="card-body">
+                    <h5 class="mt-3">{{ apartment.title }}</h5>
+                    <p class="mb-2">{{ apartment.address }}</p>
+                    <p v-show="apartment.distance" class="mb-2">{{ roundedDistance }} km</p>
+                    <ul class="card-services" @mouseover="handleMouseOver">
+                        <li v-for="service in apartment.services" :key="service.id"><i :class="service.icon"></i></li>
+                    </ul>
+                    <ul class="d-flex gap-3">
+                        <li><i class="fa-solid fa-door-closed"></i> {{ apartment.rooms }}</li>
+                        <li><i class="fa-solid fa-bed"></i> {{ apartment.beds }}</li>
+                    </ul>
+                </div>
             </div>
-        </div>
+        </RouterLink>
     </div>
 </template>
 

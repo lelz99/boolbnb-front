@@ -98,7 +98,7 @@ export default {
 
         fetchApartments() {
             store.isLoading = true;
-            axios.get(store.baseUri + 'apartments/')
+            axios.get(store.baseUri)
                 .then(res => {
                     store.apartmentsList = res.data;
                     store.isAlertOpen = false;
