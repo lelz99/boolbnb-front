@@ -60,7 +60,7 @@ export default {
             <h3 class="text-center pb-1 mb-3 bottom-border">Servizi</h3>
             <ul class="row m-0 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 list-unstyled">
 
-                <li v-for="service in apartment.service"><span><i :class="`{{ service.icon }} me-2 brand-color`"></i>
+                <li v-for="service in  apartment.services "><span><i :class="`${service.icon} me-2 brand-color`"></i>
                         {{ service.label }}</span></li>
             </ul>
         </section>

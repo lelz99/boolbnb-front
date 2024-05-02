@@ -18,7 +18,10 @@ export default {
             axios.get(store.baseUri + this.$route.params.slug)
                 .then(res => { this.apartment = res.data })
                 .catch(err => { console.error(err) })
-                .then(() => { store.isLoading = false });
+                .then(() => {
+                    store.isLoading = false;
+                    console.log(this.apartment)
+                });
         }
     },
     computed: {
