@@ -129,8 +129,15 @@ export default {
                 }
             })
                 .then(() => {
+
                     this.isPristine = true;
-                    this.form = {...defaultForm} ;
+                    // this.form = { ...defaultForm };
+                    // Svuoto i campi degli input
+                    this.form.name = '';
+                    this.form.surname = '';
+                    this.form.email = '';
+                    this.form.text = '';
+
                     this.successMessage = "Messaggio inviato con successo!";
                 })
                 .catch(err => {
@@ -154,6 +161,7 @@ export default {
 
 <template>
     <AppLoader v-if="store.isLoading" />
+    
     <div v-else-if="!store.isLoading && apartment" class="container" id="show">
         <header class="mt-3">
             <h1 class="text-center m-0">{{ apartment.title }}</h1>
@@ -229,6 +237,7 @@ export default {
                 <h3 class="text-center pb-1 mb-3 bottom-border">Contatta l'host</h3>
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome<sup class="text-danger">*</sup></label>
+
                     <input type="text" class="form-control" name="name" id="name" placeholder="Mario Rossi"
                         v-model.trim="form.name">
                 </div>
