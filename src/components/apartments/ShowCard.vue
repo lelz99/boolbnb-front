@@ -82,4 +82,53 @@ export default {
     </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+/*utilities*/
+.bottom-border {
+    border-bottom: 1px #172BA1 solid;
+}
+
+/*styling elements*/
+#show>* {
+    background-color: white;
+    border-radius: 25px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+#eye-catcher {
+    img {
+        object-fit: cover;
+        width: 100%;
+        max-height: 384px;
+        border-radius: 25px;
+        padding: 0;
+    }
+
+    div {
+        overflow-y: auto;
+        max-height: 384px;
+    }
+
+    div::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+#details li,
+#services li {
+    margin-bottom: 1rem;
+
+    span {
+        background-color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+    }
+}
+
+#map-div {
+    width: 100%;
+    height: 300px;
+    border-radius: 25px;
+}
+</style>
