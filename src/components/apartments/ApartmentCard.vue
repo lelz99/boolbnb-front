@@ -45,6 +45,7 @@ export default {
             <figure>
                 <img class="card-image card-img-top img-fluid rounded" :src="apartment.cover_image"
                     :alt="apartment.title">
+                <span v-if="apartment.sponsorship_id" class="badge badge-danger">Sponsorizzato</span>
             </figure>
 
             <div class="card-body">
@@ -64,10 +65,31 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.apartment-card {
+    position: relative;
+    display: inline-block;
+}
+
+.apartment-image {
+    width: 100%;
+    height: auto;
+}
+
+.badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
 .card-apartment {
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease;
-    
+
     figure {
         width: 100%;
         height: 300px;
@@ -98,10 +120,12 @@ export default {
 
 
 // Effetto hover d-md
-@media (min-width: 768px) { // d-md
+@media (min-width: 768px) {
+
+    // d-md
     .card-apartment:hover {
         transform: scale(1.1);
-        cursor: pointer; 
+        cursor: pointer;
     }
 }
 </style>
