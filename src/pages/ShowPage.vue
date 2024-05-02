@@ -140,6 +140,25 @@ export default {
             <h3 class="text-center pb-1 mb-3 bottom-border">Dove sarai</h3>
             <div id="map-div"></div>
         </section>
+        <!-- invia messaggio -->
+        <section id="message" class="pb-3">
+            <h3 class="text-center pb-1 mb-3 bottom-border">Contatta l'host</h3>
+            <div class="mb-3">
+                <label for="message-name" class="form-label">Nome e Cognome*</label>
+                <input type="text" class="form-control" name="message-name" id="message-name" placeholder="Mario Rossi">
+            </div>
+            <div class="mb-3">
+                <label for="message-email" class="form-label">Indirizzo Mail*</label>
+                <input type="email" class="form-control" name="message-email" id="message-email"
+                    placeholder="email@esempio.com">
+            </div>
+            <div class="mb-3">
+                <label for="message-text" class="form-label">Corpo del messaggio*</label>
+                <textarea class="form-control" name="message-text" id="message-text" rows="3"></textarea>
+            </div>
+            <button class="btn btn-primary">Invia Messaggio</button>
+        </section>
+
     </div>
 </template>
 
