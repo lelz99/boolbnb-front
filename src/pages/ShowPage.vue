@@ -26,6 +26,9 @@ export default {
                 .catch(err => { console.error(err) })
                 .then(() => {
                     store.isLoading = false;
+                })
+                .finally(() => {
+                    console.log(this.apartment);
                     this.mapMarker();
                 });
         },
@@ -133,11 +136,11 @@ export default {
             <p class="m-0">{{ apartment.description }}</p>
         </section>
         <!-- mappa -->
+        <section id="apartment-map" class="pb-3">
+            <h3 class="text-center pb-1 mb-3 bottom-border">Dove sarai</h3>
+            <div id="map-div"></div>
+        </section>
     </div>
-    <section id="apartment-map" class="pb-3">
-        <h3 class="text-center pb-1 mb-3 bottom-border">Dove sarai</h3>
-        <div id="map-div"></div>
-    </section>
 </template>
 
 <style lang="scss">
