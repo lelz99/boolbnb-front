@@ -9,7 +9,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
 const API_KEY = '82X2Cl2U4NDmOxA8fgnGKju65G1vKsqh';
 const messageEndpoint = 'http://localhost:8000/api/messages/';
-const defaultForm = { email: '', namesurname: '', message: '' };
+const defaultForm = { name: '', surname: '', email: '', text: '' };
 
 export default {
     name: 'ShowPage',
@@ -75,10 +75,20 @@ export default {
         },
         sendForm() {
             store.isLoading = true;
-            axios.post(messageEndpoint, this.form)
-                .then(() => { this.form = { ...defaultForm } })
-                .catch(err => { console.error(err) })
-                .then(() => { store.isLoading = false });
+            axios.post(messageEndpoint, JSON.stringify(this.form), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(() => {
+                    this.form = { ...defaultForm };
+                    this.successMessage = "Messaggio inviato con successo!";
+                })
+                .catch(err => {
+                    console.error(err);
+                    this.successMessage = "Si è verificato un errore durante l'invio del messaggio.";
+                })
+                .finally(() => { store.isLoading = false });
         }
     },
     created() {
@@ -138,7 +148,7 @@ export default {
             <h3 class="text-center pb-1 mb-3 bottom-border">Servizi</h3>
             <ul class="row m-0 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 list-unstyled">
 
-                <li v-for="service in  apartment.services "><span><i :class="`${service.icon} me-2 brand-color`"></i>
+                <li v-for="service in apartment.services "><span><i :class="`${service.icon} me-2 brand-color`"></i>
                         {{ service.label }}</span></li>
             </ul>
         </section>
@@ -154,22 +164,27 @@ export default {
         </section>
         <!-- invia messaggio -->
         <section id="message-area" class="pb-3">
-            <form @submit.prevent="sendForm">
+            <form @submit.prevent="sendForm" enctype="multipart/form-data">
                 <h3 class="text-center pb-1 mb-3 bottom-border">Contatta l'host</h3>
                 <div class="mb-3">
-                    <label for="namesurname" class="form-label">Nome e Cognome<sup class="text-danger">*</sup></label>
-                    <input type="text" class="form-control" name="namesurname" id="namesurname"
-                        placeholder="Mario Rossi" v-model.trim="form.namesurname" required>
+                    <label for="name" class="form-label">Nome e Cognome<sup class="text-danger">*</sup></label>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Mario Rossi"
+                        v-model.trim="form.name" required>
                 </div>
                 <div class="mb-3">
-                    <label for="message-email" class="form-label">Indirizzo Mail<sup class="text-danger">*</sup></label>
-                    <input type="email" class="form-control" name="message-email" id="message-email"
-                        placeholder="email@esempio.com" v-model.trim="form.email" required>
+                    <label for="surname" class="form-label">Nome e Cognome<sup class="text-danger">*</sup></label>
+                    <input type="text" class="form-control" name="surname" id="surname" placeholder="Mario Rossi"
+                        v-model.trim="form.surname" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Indirizzo Mail<sup class="text-danger">*</sup></label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="email@esempio.com"
+                        v-model.trim="form.email" required>
                     <small class="form-text text-muted">Ti ricontatteremo a questo indirizzo</small>
                 </div>
                 <div class="mb-3">
-                    <label for="message" class="form-label">Corpo del messaggio<sup class="text-danger">*</sup></label>
-                    <textarea class="form-control" name="message" id="message" rows="3" v-model.trim="form.message"
+                    <label for="text" class="form-label">Corpo del messaggio<sup class="text-danger">*</sup></label>
+                    <textarea class="form-control" name="text" id="text" rows="3" v-model.trim="form.text"
                         required></textarea>
                 </div>
                 <button class="btn btn-primary" type="submit">Invia Messaggio</button>
