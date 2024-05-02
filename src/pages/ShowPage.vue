@@ -15,6 +15,11 @@ export default {
     data: () => ({
         store,
         apartment: null,
+        form: {
+            email: '',
+            namesurname: '',
+            message: ''
+        }
     }),
     methods: {
         getApartment() {
@@ -141,23 +146,27 @@ export default {
             <div id="map-div"></div>
         </section>
         <!-- invia messaggio -->
-        <section id="message" class="pb-3">
-            <h3 class="text-center pb-1 mb-3 bottom-border">Contatta l'host</h3>
-            <div class="mb-3">
-                <label for="message-name" class="form-label">Nome e Cognome<sup class="text-danger">*</sup></label>
-                <input type="text" class="form-control" name="message-name" id="message-name" placeholder="Mario Rossi">
-            </div>
-            <div class="mb-3">
-                <label for="message-email" class="form-label">Indirizzo Mail<sup class="text-danger">*</sup></label>
-                <input type="email" class="form-control" name="message-email" id="message-email"
-                    placeholder="email@esempio.com">
-                <small class="form-text text-muted">Ti ricontatteremo a questo indirizzo</small>
-            </div>
-            <div class="mb-3">
-                <label for="message-text" class="form-label">Corpo del messaggio<sup class="text-danger">*</sup></label>
-                <textarea class="form-control" name="message-text" id="message-text" rows="3"></textarea>
-            </div>
-            <button class="btn btn-primary" type="submit">Invia Messaggio</button>
+        <section id="message-area" class="pb-3">
+            <form @submit.prevent="sendForm">
+                <h3 class="text-center pb-1 mb-3 bottom-border">Contatta l'host</h3>
+                <div class="mb-3">
+                    <label for="namesurname" class="form-label">Nome e Cognome<sup class="text-danger">*</sup></label>
+                    <input type="text" class="form-control" name="namesurname" id="namesurname"
+                        placeholder="Mario Rossi" v-model="form.namesurname" required>
+                </div>
+                <div class="mb-3">
+                    <label for="message-email" class="form-label">Indirizzo Mail<sup class="text-danger">*</sup></label>
+                    <input type="email" class="form-control" name="message-email" id="message-email"
+                        placeholder="email@esempio.com" v-model="form.email" required>
+                    <small class="form-text text-muted">Ti ricontatteremo a questo indirizzo</small>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Corpo del messaggio<sup class="text-danger">*</sup></label>
+                    <textarea class="form-control" name="message" id="message" rows="3" v-model="form.namesurname"
+                        required></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">Invia Messaggio</button>
+            </form>
         </section>
 
     </div>
