@@ -1,5 +1,6 @@
 <script>
 import { store } from '../../data/store';
+import mapMarker from '../../data/map-marker';
 
 export default {
     name: 'ShowCard',
