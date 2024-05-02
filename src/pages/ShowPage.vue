@@ -144,19 +144,20 @@ export default {
         <section id="message" class="pb-3">
             <h3 class="text-center pb-1 mb-3 bottom-border">Contatta l'host</h3>
             <div class="mb-3">
-                <label for="message-name" class="form-label">Nome e Cognome*</label>
+                <label for="message-name" class="form-label">Nome e Cognome<sup class="text-danger">*</sup></label>
                 <input type="text" class="form-control" name="message-name" id="message-name" placeholder="Mario Rossi">
             </div>
             <div class="mb-3">
-                <label for="message-email" class="form-label">Indirizzo Mail*</label>
+                <label for="message-email" class="form-label">Indirizzo Mail<sup class="text-danger">*</sup></label>
                 <input type="email" class="form-control" name="message-email" id="message-email"
                     placeholder="email@esempio.com">
+                <small class="form-text text-muted">Ti ricontatteremo a questo indirizzo</small>
             </div>
             <div class="mb-3">
-                <label for="message-text" class="form-label">Corpo del messaggio*</label>
+                <label for="message-text" class="form-label">Corpo del messaggio<sup class="text-danger">*</sup></label>
                 <textarea class="form-control" name="message-text" id="message-text" rows="3"></textarea>
             </div>
-            <button class="btn btn-primary">Invia Messaggio</button>
+            <button class="btn btn-primary" type="submit">Invia Messaggio</button>
         </section>
 
     </div>
