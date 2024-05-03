@@ -19,9 +19,8 @@ export default {
         store,
         apartment: null,
         form: defaultForm,
-        successMessage: null,
-        errorMessage: null,
-        showSuccessAlert: false,    
+        successMessage: null,        
+        // showSuccessAlert: false,    
         errors: {},
         isPristine: true
 
@@ -132,7 +131,6 @@ export default {
                 }
             })
                 .then(() => {
-
                     this.isPristine = true;
                     // this.form = { ...defaultForm };
                     // Svuoto i campi degli input
@@ -140,13 +138,11 @@ export default {
                     this.form.surname = '';
                     this.form.email = '';
                     this.form.text = '';
-
-                    this.successMessage = "Messaggio inviato con successo!";
-                    this.showSuccessAlert = true;
+                    this.successMessage = "Messaggio inviato con successo!";                   
                 })
                 .catch(err => {
                     console.error(err);
-                    this.errorMessage = "Si è verificato un errore durante l'invio del messaggio.";
+                    this.successMessage = "Si è verificato un errore durante l'invio del messaggio.";
                     if(err.response.status === 400){
                         const {errors} = err.response.data
                         this.errors = {...errors}
@@ -157,8 +153,9 @@ export default {
                 })
                 .finally(() => { store.isLoading = false });
         },
-        closeSuccessAlert() {
-            this.showSuccessAlert = false;
+        closeAlert() {
+            this.successMessage = null;
+            this.errors = {}
         }
     },
     created() {
@@ -167,19 +164,7 @@ export default {
 }
 </script>
 
-<template>
-
-    <!-- Alert di successo-->
-    <div v-if="showSuccessAlert" class="alert alert-success alert-dismissible fade show" role="alert">
-        <span>{{ successMessage }}</span>       
-        <button type="button" class="btn-close" @click="closeSuccessAlert"></button>
-    </div>
-
-    <!-- Alert di errore -->
-    <div v-else-if="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
-        <span>{{ errorMessage }}</span>       
-        <button type="button" class="btn-close" @click="closeErrorAlert"></button>
-    </div>
+<template>   
 
     <AppLoader v-if="store.isLoading" />
     
@@ -248,12 +233,25 @@ export default {
         </section>
         <!-- invia messaggio -->
         <section id="message-area" class="pb-3">
-            <!-- <MessageFormAlert :isOpen="showAlert" :type="alertType" :dismissible="!hasError">
-                <div v-if="successMessage">{{ successMessage }}</div>
+            
+            <!--! Alert -->
+            <!-- <MessageFormAlert :isOpen="showAlert" @close="closeAlert" :type="alertType" :dismissible="!hasError">
+                <div v-if="successMessage">{{ successMessage }}
+                    <ul v-if="hasError">
+                        <li v-for="(error, key) in errors" :key="key">{{ error }}</li>
+                    </ul>
+                </div>
+            </MessageFormAlert> -->            
+            <MessageFormAlert :isOpen="showAlert" @close="closeAlert" :type="alertType" :dismissible="!hasError">
                 <ul v-if="hasError">
                     <li v-for="(error, key) in errors" :key="key">{{ error }}</li>
                 </ul>
-            </MessageFormAlert> -->
+                <div v-else>
+                    <span>{{ successMessage }}</span>
+                </div>
+            </MessageFormAlert>
+
+
             <form @submit.prevent="sendForm" enctype="multipart/form-data" novalidate>
                 <h3 class="text-center pb-1 mb-3 bottom-border">Contatta l'host</h3>
                 <div class="mb-3">
