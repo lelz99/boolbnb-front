@@ -248,12 +248,12 @@ export default {
         </section>
         <!-- invia messaggio -->
         <section id="message-area" class="pb-3">
-            <MessageFormAlert :isOpen="showAlert" :type="alertType" :dismissible="!hasError">
+            <!-- <MessageFormAlert :isOpen="showAlert" :type="alertType" :dismissible="!hasError">
                 <div v-if="successMessage">{{ successMessage }}</div>
                 <ul v-if="hasError">
                     <li v-for="(error, key) in errors" :key="key">{{ error }}</li>
                 </ul>
-            </MessageFormAlert>
+            </MessageFormAlert> -->
             <form @submit.prevent="sendForm" enctype="multipart/form-data" novalidate>
                 <h3 class="text-center pb-1 mb-3 bottom-border">Contatta l'host</h3>
                 <div class="mb-3">
