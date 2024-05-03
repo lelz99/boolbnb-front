@@ -19,6 +19,8 @@ export default {
         apartment: null,
         form: defaultForm,
         successMessage: null,
+        errorMessage: null,
+        showSuccessAlert: false,       
 
     }),
     methods: {
@@ -90,12 +92,16 @@ export default {
                     this.form.email = '';
                     this.form.text = '';
                     this.successMessage = "Messaggio inviato con successo!";
+                    this.showSuccessAlert = true;
                 })
                 .catch(err => {
                     console.error(err);
-                    this.successMessage = "Si è verificato un errore durante l'invio del messaggio.";
+                    this.errorMessage = "Si è verificato un errore durante l'invio del messaggio.";
                 })
                 .finally(() => { store.isLoading = false });
+        },
+        closeSuccessAlert() {
+            this.showSuccessAlert = false;
         }
     },
     created() {
@@ -105,6 +111,19 @@ export default {
 </script>
 
 <template>
+
+    <!-- Alert di successo-->
+    <div v-if="showSuccessAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span>{{ successMessage }}</span>       
+        <button type="button" class="btn-close" @click="closeSuccessAlert"></button>
+    </div>
+
+    <!-- Alert di errore -->
+    <div v-else-if="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span>{{ errorMessage }}</span>       
+        <button type="button" class="btn-close" @click="closeErrorAlert"></button>
+    </div>
+
     <AppLoader v-if="store.isLoading" />
     
     <div v-else-if="!store.isLoading && apartment" class="container" id="show">
