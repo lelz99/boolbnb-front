@@ -139,7 +139,7 @@ export default {
 <template>
 
     <h1 class="text-light">Ricerca avanzata</h1>
-    <div class="row">
+    <div class="row mb-4">
 
         <div class="col-12">
             <div class="mb-3 ">
