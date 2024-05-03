@@ -257,13 +257,13 @@ export default {
             <form @submit.prevent="sendForm" enctype="multipart/form-data" novalidate>
                 <h3 class="text-center pb-1 mb-3 bottom-border">Contatta l'host</h3>
                 <div class="mb-3">
-                    <label for="name" class="form-label">Nome<sup class="text-danger">*</sup></label>
+                    <label for="name" class="form-label">Nome</label>
 
                     <input type="text" class="form-control" name="name" id="name" placeholder="Mario Rossi"
                         v-model.trim="form.name">
                 </div>
                 <div class="mb-3">
-                    <label for="surname" class="form-label">Cognome<sup class="text-danger">*</sup></label>
+                    <label for="surname" class="form-label">Cognome</label>
                     <input type="text" class="form-control" name="surname" id="surname" placeholder="Mario Rossi"
                         v-model.trim="form.surname">
                         <div v-if="errors.surname" class="invalid-feedback">{{ errors.surname }}</div>

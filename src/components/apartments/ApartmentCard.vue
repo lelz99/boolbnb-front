@@ -47,7 +47,7 @@ export default {
                 <figure>
                     <img class="card-image card-img-top img-fluid rounded" :src="apartment.cover_image"
                         :alt="apartment.title">
-                        <span v-if="apartment.sponsorship_id" class="badge badge-danger">Sponsorizzato</span>
+                        <span v-if="apartment.sponsorship_id" class="badge badge-danger">Sponsorizzato <i class="fa-solid fa-crown"></i></span>
                 </figure>
                 <div class="card-body">
                     <h5 class="mt-3">{{ apartment.title }}</h5>
