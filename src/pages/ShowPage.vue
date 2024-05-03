@@ -183,7 +183,7 @@ export default {
                 <RouterLink :to="{ name: 'home' }" class="btn btn-secondary btn-sm"><i
                         class="fas fa-arrow-left me-2 d-none d-sm-inline"></i>Indietro</RouterLink>
                 <!-- bottone invia messaggio -->
-                <a href="#" class="btn btn-primary btn-sm">
+                <a href="#message-area" class="btn btn-primary btn-sm">
                     <i class="fas fa-comments me-2 d-none d-sm-inline"></i>
                     Contattal'host</a>
             </div>
