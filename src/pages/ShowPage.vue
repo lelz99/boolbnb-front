@@ -20,8 +20,11 @@ export default {
         apartment: null,
         form: defaultForm,
         successMessage: null,
+        errorMessage: null,
+        showSuccessAlert: false,    
         errors: {},
         isPristine: true
+
 
     }),
     computed: {
@@ -139,18 +142,23 @@ export default {
                     this.form.text = '';
 
                     this.successMessage = "Messaggio inviato con successo!";
+                    this.showSuccessAlert = true;
                 })
                 .catch(err => {
                     console.error(err);
+                    this.errorMessage = "Si è verificato un errore durante l'invio del messaggio.";
                     if(err.response.status === 400){
                         const {errors} = err.response.data
                         this.errors = {...errors}
                     } else {
                         this.errors = {network: 'Si è verificato un errore'}
-                    }
-                    
+                    }                   
+
                 })
                 .finally(() => { store.isLoading = false });
+        },
+        closeSuccessAlert() {
+            this.showSuccessAlert = false;
         }
     },
     created() {
@@ -160,6 +168,19 @@ export default {
 </script>
 
 <template>
+
+    <!-- Alert di successo-->
+    <div v-if="showSuccessAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span>{{ successMessage }}</span>       
+        <button type="button" class="btn-close" @click="closeSuccessAlert"></button>
+    </div>
+
+    <!-- Alert di errore -->
+    <div v-else-if="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span>{{ errorMessage }}</span>       
+        <button type="button" class="btn-close" @click="closeErrorAlert"></button>
+    </div>
+
     <AppLoader v-if="store.isLoading" />
     
     <div v-else-if="!store.isLoading && apartment" class="container" id="show">
