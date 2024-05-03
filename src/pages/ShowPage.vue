@@ -14,28 +14,28 @@ const defaultForm = { name: '', surname: '', email: '', text: '' };
 
 export default {
     name: 'ShowPage',
-    components: { AppLoader, AppAlert, MessageFormAlert},
+    components: { AppLoader, AppAlert, MessageFormAlert },
     data: () => ({
         store,
         apartment: null,
         form: defaultForm,
         successMessage: null,        
-        // showSuccessAlert: false,    
+        // showSuccessAlert: false, 
         errors: {},
         isPristine: true
 
 
     }),
     computed: {
-        hasError(){
+        hasError() {
             return Object.keys(this.errors).length
         },
 
-        showAlert(){
+        showAlert() {
             return Boolean(this.successMessage || this.hasError)
         },
 
-        alertType(){
+        alertType() {
             return this.hasError ? 'danger' : 'success'
         }
     },
@@ -93,26 +93,26 @@ export default {
             }
         },
 
-        validateField(field){
-            if(this.isPristine) return '';
+        validateField(field) {
+            if (this.isPristine) return '';
             return this.errors[field] ? 'is-invalid' : 'is valid';
         },
 
-        validateForm(){
-            
+        validateForm() {
+
             this.errors = {};
             this.successMessage = null;
             //Validazione mail
-            if(!this.form.email){
+            if (!this.form.email) {
                 this.errors.email = 'La mail è obbligatoria'
-            } else if (!this.form.email.match( /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)){
+            } else if (!this.form.email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
                 this.errors.email = 'La mail inserita non è valida'
             }
- 
+
             //validazione messaggio
 
-            if(!this.form.text) this.errors.text = 'Il testo è obbligatorio'
-            
+            if (!this.form.text) this.errors.text = 'Il testo è obbligatorio'
+
         },
 
         sendForm() {
@@ -121,8 +121,8 @@ export default {
             // Validazione
             this.validateForm();
 
-            if(this.hasError) return;
-            
+            if (this.hasError) return;
+
             store.isLoading = true;
             this.form.apartment_id = this.apartment.id;
             axios.post(messageEndpoint, JSON.stringify(this.form), {
@@ -147,11 +147,14 @@ export default {
                         const {errors} = err.response.data
                         this.errors = {...errors}
                     } else {
-                        this.errors = {network: 'Si è verificato un errore'}
-                    }                   
+                        this.errors = { network: 'Si è verificato un errore' }
+                    }
 
                 })
-                .finally(() => { store.isLoading = false });
+                .finally(() => {
+                    store.isLoading = false;
+                    this.getApartment();
+                });
         },
         closeAlert() {
             this.successMessage = null;
@@ -164,10 +167,10 @@ export default {
 }
 </script>
 
-<template>   
 
+<template>   
     <AppLoader v-if="store.isLoading" />
-    
+
     <div v-else-if="!store.isLoading && apartment" class="container" id="show">
         <header class="mt-3">
             <h1 class="text-center m-0">{{ apartment.title }}</h1>
@@ -255,29 +258,29 @@ export default {
             <form @submit.prevent="sendForm" enctype="multipart/form-data" novalidate>
                 <h3 class="text-center pb-1 mb-3 bottom-border">Contatta l'host</h3>
                 <div class="mb-3">
-                    <label for="name" class="form-label">Nome<sup class="text-danger">*</sup></label>
+                    <label for="name" class="form-label">Nome</label>
 
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Mario Rossi"
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Mario"
                         v-model.trim="form.name">
                 </div>
                 <div class="mb-3">
-                    <label for="surname" class="form-label">Cognome<sup class="text-danger">*</sup></label>
+                    <label for="surname" class="form-label">Cognome</label>
                     <input type="text" class="form-control" name="surname" id="surname" placeholder="Mario Rossi"
                         v-model.trim="form.surname">
-                        <div v-if="errors.surname" class="invalid-feedback">{{ errors.surname }}</div>
+                    <div v-if="errors.surname" class="invalid-feedback">{{ errors.surname }}</div>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Indirizzo Mail<sup class="text-danger">*</sup></label>
-                    <input type="email" class="form-control" :class="validateField('email')" name="email" id="email" placeholder="email@esempio.com"
-                        v-model.trim="form.email" required>
-                        <div v-if="errors.email" class="invalid-feedback">{{ errors.email }}</div>
+                    <input type="email" class="form-control" :class="validateField('email')" name="email" id="email"
+                        placeholder="email@esempio.com" v-model.trim="form.email" required>
+                    <div v-if="errors.email" class="invalid-feedback">{{ errors.email }}</div>
                     <small v-else class="form-text text-muted">Ti ricontatteremo a questo indirizzo</small>
                 </div>
                 <div class="mb-3">
                     <label for="text" class="form-label">Corpo del messaggio<sup class="text-danger">*</sup></label>
-                    <textarea class="form-control" :class="validateField('text')" name="text" id="text" rows="3" v-model.trim="form.text"
-                        required></textarea>
-                        <div v-if="errors.text" class="invalid-feedback">{{ errors.text }}</div>
+                    <textarea class="form-control" :class="validateField('text')" name="text" id="text" rows="3"
+                        v-model.trim="form.text" required></textarea>
+                    <div v-if="errors.text" class="invalid-feedback">{{ errors.text }}</div>
                 </div>
                 <button class="btn btn-primary" type="submit">Invia Messaggio</button>
             </form>
