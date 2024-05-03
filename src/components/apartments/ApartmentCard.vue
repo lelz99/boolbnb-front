@@ -72,6 +72,10 @@ export default {
     display: inline-block;
 }
 
+a{
+    text-decoration: none;
+}
+
 .apartment-image {
     width: 100%;
     height: auto;
