@@ -12,6 +12,6 @@ export default {
         <div v-if="apartments.length" class="row">
             <ApartmentCard v-for="apartment in apartments" :key="apartment.id" :apartment="apartment"/>
         </div>
-        <h3 v-else>Non ci sono appartamenti</h3>
+        <h3 v-else class="mt-4">Non ci sono appartamenti</h3>
     </section>
 </template>

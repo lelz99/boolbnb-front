@@ -48,7 +48,7 @@ export default {
 
 
 
-            <ul id="suggestions-list" class="p-2 mt-3 bg-light rounded" v-show="suggestions.length > 0">
+            <ul id="suggestions-list" class="p-2 mt-3 bg-light rounded text-white" v-show="suggestions.length > 0">
                 <li v-for="suggestion in suggestions" :key="suggestion.lat + suggestion.lon"
                     @click="$emit('selectAddress', suggestion, selectedAddress)" class="pointer">
                     <i class="fa-solid fa-location-dot text-primary"></i> {{ suggestion.address }}
@@ -58,4 +58,6 @@ export default {
     </div>
 </template>
 
-<style></style>
+<style lang='scss' scoped>
+
+</style>
