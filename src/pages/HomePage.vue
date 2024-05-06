@@ -1,3 +1,4 @@
+
 <script>
 import axios from 'axios';
 import ApartmentCard from '../components/apartments/ApartmentCard.vue';
@@ -8,7 +9,6 @@ import { store } from '../data/store';
 import SearchBar from '../components/SearchBar.vue';
 
 const baseUri = 'http://localhost:8000/api/';
-
 
 export default {
   name: 'HomePage',
@@ -26,7 +26,9 @@ export default {
       longitude: '', // Longitudine selezionata
       distanceRadius: '20', // Imposta un valore predefinito per il raggio di distanza (20 km)
       timeout: null, // Timeout per ritardare le richieste
-    }
+      showVideo: true, // Mostra il video di sfondo all'inizio
+      showContent: false // Aggiunto per gestire la transizione del contenuto
+    };
   },
   methods: {
     suggestAddresses() {
@@ -35,12 +37,10 @@ export default {
         return;
       }
 
-      // Se c'è già una richiesta in corso, annulla il timeout
       if (this.timeout) {
         clearTimeout(this.timeout);
       }
 
-      // Avvia un timeout per ritardare l'esecuzione della richiesta
       this.timeout = setTimeout(() => {
         axios.get('https://api.tomtom.com/search/2/geocode/' + this.addressTerm.trim() + '.json', {
           params: {
@@ -61,25 +61,19 @@ export default {
             console.error(error);
             this.suggestions = [];
           });
-      }, 500); // Ritardo di 500 millisecondi tra le richieste
+      }, 500);
     },
 
     selectAddress(address) {
-      // this.selectedAddress = address;
       store.selectedAddress = address;
-      // this.latitude = address.lat; // Aggiorna la latitudine nel dato Vue.js
-      store.latitude = address.lat; // Aggiorna la latitudine nel dato Vue.js
-      // this.longitude = address.lon; // Aggiorna la longitudine nel dato Vue.js
-      store.longitude = address.lon; // Aggiorna la longitudine nel dato Vue.js
-      // this.addressTerm = address.address; // Compila l'input dell'indirizzo con l'indirizzo selezionato
-      this.addressTerm = address.address; // Compila l'input dell'indirizzo con l'indirizzo selezionato
+      store.latitude = address.lat;
+      store.longitude = address.lon;
+      this.addressTerm = address.address;
       store.addressTerm = address.address;
       this.suggestions = [];
-      // store.selectedAddress = address;
     },
 
     submitForm() {
-      // Effettua una chiamata API al tuo endpoint Laravel
       axios.get(`http://localhost:8000/api/apartments/search`, {
         params: {
           latitude: store.latitude,
@@ -111,26 +105,103 @@ export default {
           this.isAlertOpen = true;
         }).then(() => {
           this.isLoading = false;
-        })
+        });
     }
   },
-
   created() {
-    this.fetchApartments()
+    this.fetchApartments();
+    setTimeout(() => {
+      this.showVideo = false;
+      setTimeout(() => {
+        this.showContent = true;
+      }, 500);
+    }, 4800);
   }
 }
 </script>
 
 <template>
-  <h1 class="text-light">Quale sarà la tua prossima meta?</h1>
+  <div>
+    <div class="video-background" v-if="showVideo">
+      <video autoplay muted loop id="video-background">
+        <source src="/background-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
 
-  <div class="col-12">
-    <!-- Ricerca -->
-    <SearchBar @selectAddress="selectAddress" @suggest="suggestAddresses" :suggestions='suggestions'
-      v-model="addressTerm" v-model:distanceRadius="distanceRadius" :selectedAddress="selectedAddress"
-      @submitForm="submitForm" />
+    <div v-else>
+      <div class="page-content" :class="{ 'show-content': showContent }">
+        <div class="col-12">
+          <!-- Ricerca -->
+          <SearchBar @selectAddress="selectAddress" @suggest="suggestAddresses" :suggestions='suggestions'
+            v-model="addressTerm" v-model:distanceRadius="distanceRadius" :selectedAddress="selectedAddress"
+            @submitForm="submitForm" />
+        </div>
+        <AppAlert :show="isAlertOpen" @close="isAlertOpen = false" />
+        <AppLoader v-if="isLoading" />
+        
+        <!-- Applica l'effetto di comparizione alle carte -->
+        <ApartmentList v-else :apartments="apartmentsList" class="appearance-effect" />
+      </div>
+      <div class="background-image"></div>
+    </div>
   </div>
-  <AppAlert :show="isAlertOpen" @close="isAlertOpen = false" />
-  <AppLoader v-if="isLoading" />
-  <ApartmentList v-else :apartments="apartmentsList" />
 </template>
+
+<style lang='scss' scoped>
+.video-background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+#video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.page-content {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+
+  &.show-content {
+    opacity: 1;
+  }
+}
+
+.appearance-effect {
+  animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.background-image {
+  background-image: url('/homepage.jpg');
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-size: cover;
+  z-index: -1;
+  filter: contrast(60%);
+
+}
+</style>

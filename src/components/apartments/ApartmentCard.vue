@@ -40,27 +40,31 @@ export default {
 </script>
 
 <template>
-    <div class="col-sm-12 col-lg-6 col-xl-3 col-xl-2 my-4">
+    <div class="col-sm-12 col-lg-6 col-xl-3 col-xl-2">
         <RouterLink :to="`/apartments/${apartment.slug}`">
             <!-- <RouterLink :to="{name: 'show', params:{slug: apartment.slug}}"> -->
-            <div class="card card-apartment p-3">
-                <figure>
+            <div class="card card-apartment">
+                <figure class="p-1">
                     <img class="card-image card-img-top img-fluid rounded" :src="apartment.cover_image"
                         :alt="apartment.title">
-                    <span v-if="apartment.sponsored" class="badge badge-danger">Sponsorizzato <i
+                    <span v-if="apartment.sponsored" class="badge badge-gold">IN EVIDENZA <i
                             class="fa-solid fa-crown"></i></span>
                 </figure>
                 <div class="card-body">
-                    <h5 class="mt-3">{{ apartment.title }}</h5>
-                    <p class="mb-2">{{ apartment.address }}</p>
-                    <p v-show="apartment.distance" class="mb-2">{{ roundedDistance }} km</p>
-                    <ul class="card-services" @mouseover="handleMouseOver">
-                        <li v-for="service in apartment.services" :key="service.id"><i :class="service.icon"></i></li>
-                    </ul>
+                    <h5 class="">{{ apartment.title }}</h5>
+                    <div class="d-flex gap-3">
+                        <p class="mb-2"><i class="fa-solid fa-location-dot"></i> {{ apartment.address }}</p>
+                        <p v-show="apartment.distance" class="mb-2">{{ roundedDistance }} km</p>
+                    </div>
+                    <hr>
                     <ul class="d-flex gap-3">
-                        <li><i class="fa-solid fa-door-closed"></i> {{ apartment.rooms }}</li>
-                        <li><i class="fa-solid fa-bed"></i> {{ apartment.beds }}</li>
+                        <li><i class="fa-solid fa-door-closed"></i> Stanze {{ apartment.rooms }} </li>
+                        <li><i class="fa-solid fa-bed"></i> Letti {{ apartment.beds }}</li>
                     </ul>
+                    <ul class="card-services" @mouseover="handleMouseOver">
+                        <li v-for="service in apartment.services" :key="service.id"><i :class="service.icon" class="color-blue"></i></li>
+                    </ul>
+                   
                 </div>
             </div>
         </RouterLink>
@@ -125,13 +129,19 @@ a {
     }
 }
 
+.badge-gold{
+    background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+    color: rgb(121, 103, 3);
+
+}
+
 
 // Effetto hover d-md
 @media (min-width: 768px) {
 
     // d-md
     .card-apartment:hover {
-        transform: scale(1.1);
+        transform: scale(1.05);
         cursor: pointer;
     }
 }

@@ -1,7 +1,5 @@
 body {
-    font-family: "Montserrat", sans-serif;
-    background: rgb(23, 43, 161);
-    background: linear-gradient(180deg, rgba(23, 43, 161, 1) 0%, rgba(255, 255, 255, 1) 110%);
+    font-family: "Urbanist", sans-serif;
     background-repeat: no-repeat;
     min-height: 100vh;
 }
@@ -21,4 +19,8 @@ ul {
 
 #suggestions-list li:hover {
     background-color: lightblue;
+}
+
+.color-blue {
+    color: #172ba1;
 }
