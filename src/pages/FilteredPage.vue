@@ -143,25 +143,25 @@ export default {
 
         <div class="col-12">
             <div class="mb-3 ">
-                <div class="d-flex gap-3 align-items-center">
-                    <div class="input-group">
+                <div class="d-flex gap-3 align-items-center justify-content-between">
+                    <div class="search w-100">
                         <input type="text" class="form-control" id="address" name="address" v-model="store.addressTerm"
                             @input="suggestAddresses">
-                        <router-link :to="{ name: 'filter' }" class="input-group-text">
-                            <button class="btn text-primary" @click="submitForm"><i
+                        <router-link :to="{ name: 'filter' }">
+                            <button class="btn" @click="submitForm"><i
                                     class="fas fa-search fa-xl"></i></button>
                         </router-link>
                     </div>
-                    <div class="text-light">
-                        <label for="radius" class="w-100 text-center">Distanza</label>
-                        <input type="range" class="form-range" id="radius" name="radius" min="5" max="30" step="5"
-                            v-model.number="store.distanceRadius">
-                        <div class="w-100 text-center">{{ store.distanceRadius }} km</div>
+                    <div class="distance">
+                        <div class="d-flex w-100">
+                            <div class="w-100"><i class="fa-solid fa-location-dot color-blue"></i> Max {{ store.distanceRadius }} km</div>
+                            <input type="range" class="form-range" id="radius" name="radius" min="5" max="30" step="5"
+                                v-model.number="store.distanceRadius">
+                        </div>
                     </div>
                 </div>
 
                 <div v-if="addressError" class="text-danger">Seleziona un indirizzo tra quelli suggeriti.</div>
-
 
                 <ul id="suggestions-list" class="p-2 mt-3 bg-light rounded" v-show="suggestions.length > 0">
                     <li v-for="suggestion in suggestions" :key="suggestion.lat + suggestion.lon"
@@ -212,6 +212,62 @@ export default {
     <AppAlert :show="store.isAlertOpen" @close="store.isAlertOpen = false" />
     <AppLoader v-if="store.isLoading" />
     <ApartmentList v-else :apartments="store.apartments" />
+    <div class="background-image"></div>
 </template>
 
-<style scoped></style>
+<style lang='scss' scoped>
+.background-image {
+  background-image: url('/homepage.jpg');
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-size: cover;
+  z-index: -1;
+  filter: contrast(60%);
+
+}
+
+.search {
+  display: inline-block;
+  position: relative;
+}
+
+.search input[type="text"] {
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.search .btn {
+  background-color: #4e99e9;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: .9s ease;
+}
+
+.search .btn:hover {
+  transform: scale(1.1);
+  color: rgb(255, 255, 255);
+  background-color: blue;
+}
+
+.distance{
+    width: 400px;
+    background-color: #fff;
+    color: grey;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</style>

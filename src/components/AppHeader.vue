@@ -15,12 +15,13 @@ export default {
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+            <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
+                <ul class="navbar-nav d-flex ">
                     <li class="nav-item">
                         <router-link class="nav-link" :to="{ name: 'home' }">Home</router-link>
                     </li>
                 </ul>
+                <router-link class="nav-link" :to="{ name: '' }"><i class="fa-regular fa-user"></i></router-link>
             </div>
         </div>
     </nav>
