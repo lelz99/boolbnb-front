@@ -183,7 +183,7 @@ export default {
         <!--* Img + Indirizzo -->
         <section id="eye-catcher">
             <!-- immagine -->
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mb-3">
                 <div class="row justify-content-center img-container col-lg-8 overflow-hidden mb-3 rounded">
                     <img :src="apartment.cover_image" :alt="apartment.title">
                 </div>
@@ -309,6 +309,27 @@ export default {
     width: 100%;
     height: 300px;
     border-radius: 25px;
+}
+
+#eye-catcher {
+    img {
+        object-fit: cover;
+        width: 100%;
+        max-height: 384px;
+    }
+
+    div {
+        max-height: 384px;
+    }
+
+    p {
+        height: calc(100% - 45px);
+        overflow-y: auto;
+    }
+
+    div::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 h3 {
