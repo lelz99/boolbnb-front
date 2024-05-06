@@ -327,7 +327,7 @@ export default {
         overflow-y: auto;
     }
 
-    div::-webkit-scrollbar {
+    p::-webkit-scrollbar {
         display: none;
     }
 }
