@@ -4,7 +4,8 @@ import ApartmentCard from './ApartmentCard.vue';
 export default {
     name: 'ApartmentList',
     components: {ApartmentCard},
-    props: { apartments: Array }
+    props: { apartments: Array, pages: Array },
+    emits:['change-page']
 }
 </script>
 <template>
@@ -17,6 +18,15 @@ export default {
                     <p class="text">Torna su</p>
                 </a>
             </div>
+
+          <!-- Paginazione -->
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li v-for="page in pages" :key="page.label" class="page-item" :class="{'active': page.active, 'disabled': !page.url}">
+                <button class="page-link" v-html="page.label" :disabled="!page.url" @click="$emit('change-page', page.url)"></button>
+              </li>             
+            </ul>
+          </nav>
         </div>
         <h3 v-else class="mt-4">Non ci sono appartamenti</h3>
     </section>
