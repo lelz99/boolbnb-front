@@ -260,20 +260,20 @@ export default {
             <form @submit.prevent="sendForm" enctype="multipart/form-data" novalidate>
                 <h3>Contatta l'host</h3>
                 <!-- Nome -->
-                <div class="mb-3">
+                <div>
                     <label for="name" class="form-label">Nome</label>
                     <input type="text" class="form-control" name="name" id="name" placeholder="Es: Mario"
                         v-model.trim="form.name">
                 </div>
                 <!-- Cognome -->
-                <div class="mb-3">
+                <div>
                     <label for="surname" class="form-label">Cognome</label>
                     <input type="text" class="form-control" name="surname" id="surname" placeholder="Es: Rossi"
                         v-model.trim="form.surname">
                     <div v-if="errors.surname" class="invalid-feedback">{{ errors.surname }}</div>
                 </div>
                 <!-- Email -->
-                <div class="mb-3">
+                <div>
                     <label for="email" class="form-label">Indirizzo Mail<sup class="text-danger">*</sup></label>
                     <input type="email" class="form-control" :class="validateField('email')" name="email" id="email"
                         placeholder="Es: email@esempio.com" v-model.trim="form.email" required>
@@ -281,14 +281,14 @@ export default {
                     <small v-else class="form-text text-muted">Ti ricontatteremo a questo indirizzo</small>
                 </div>
                 <!-- Textarea -->
-                <div class="mb-3">
+                <div>
                     <label for="text" class="form-label">Corpo del messaggio<sup class="text-danger">*</sup></label>
                     <textarea class="form-control" :class="validateField('text')" name="text" id="text" rows="3"
                         v-model.trim="form.text" required></textarea>
                     <div v-if="errors.text" class="invalid-feedback">{{ errors.text }}</div>
                 </div>
                 <!-- Invia -->
-                <button class="btn btn-primary" type="submit">Invia Messaggio</button>
+                <button class="btn btn-primary" type="submit" id="send-form">Invia Messaggio</button>
             </form>
         </section>
 
@@ -324,6 +324,7 @@ section {
 
 ul li i {
     margin-right: 8px;
+    color: #172BA1;
 }
 
 a {
@@ -331,8 +332,27 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    text-decoration: underline;
+}
+
 li {
-    padding: 0 12px;
+    padding: 0 24px;
     margin-bottom: 16px;
+}
+
+form {
+    &>div {
+        margin-bottom: 1rem;
+    }
+
+    input,
+    #send-form {
+        padding: 0.4rem 0.6rem;
+    }
+
+    #send-form:hover {
+        background-color: #172BA1;
+    }
 }
 </style>
