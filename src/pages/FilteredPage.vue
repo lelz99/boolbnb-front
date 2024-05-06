@@ -172,11 +172,12 @@ export default {
             </div>
         </div>
 
-        <div class="col-9">
+        <div class="col-7">
             <div class="mt-3 ms-3">
+                <label class="form-label text-light">Servizi</label>
                 <div class="row form-group">
-                    <div v-for="service in services" :key="service.id" class="form-check form-check-inline col-3 text-light">
-                        <label class="check-container d-flex align-items-center">
+                    <div v-for="service in services" :key="service.id" class="form-check form-check-inline col-3 p-0">
+                        <label class="check-container d-flex ">
                             <input class="form-check-input" type="checkbox" :id="service.id" v-model="filterService"
                                 :value="service.id">
                             <div class="checkmark"></div>
@@ -270,4 +271,73 @@ export default {
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.form-group{
+    background-color: #fff;
+    color: grey;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+//* FORM CHECKBOX
+
+/* Hide the default checkbox */
+.check-container input {
+    display: none;
+}
+
+.check-container {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    font-size: 15px;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 1.2em;
+    width: 1.2em;
+    background-color: #2196F300;
+    border-radius: 0.25em;
+    transition: all 0.25s;
+}
+
+/* When the checkbox is checked, add a blue background */
+.check-container input:checked~.checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    transform: rotate(0deg);
+    border: 0.1em solid grey;
+    left: 0;
+    top: 0;
+    width: 1.05em;
+    height: 1.05em;
+    border-radius: 0.25em;
+    transition: all 0.25s, border-width 0.1s;
+}
+
+/* Show the checkmark when checked */
+.check-container input:checked~.checkmark:after {
+    left: 0.46em;
+    top: 0.25em;
+    width: 0.3em;
+    height: 0.5em;
+    border-color: #fff0 white white #fff0;
+    border-width: 0 0.15em 0.15em 0;
+    border-radius: 0em;
+    transform: rotate(45deg);
+}
+
 </style>

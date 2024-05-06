@@ -44,6 +44,7 @@ export default {
   cursor: pointer;
   position: relative;
   border: none;
+  margin-top: 30px;
 }
 
 .arrow path {
