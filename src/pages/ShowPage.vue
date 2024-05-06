@@ -260,19 +260,19 @@ export default {
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome</label>
 
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Mario"
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Es: Mario"
                         v-model.trim="form.name">
                 </div>
                 <div class="mb-3">
                     <label for="surname" class="form-label">Cognome</label>
-                    <input type="text" class="form-control" name="surname" id="surname" placeholder="Mario Rossi"
+                    <input type="text" class="form-control" name="surname" id="surname" placeholder="Es: Rossi"
                         v-model.trim="form.surname">
                     <div v-if="errors.surname" class="invalid-feedback">{{ errors.surname }}</div>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Indirizzo Mail<sup class="text-danger">*</sup></label>
                     <input type="email" class="form-control" :class="validateField('email')" name="email" id="email"
-                        placeholder="email@esempio.com" v-model.trim="form.email" required>
+                        placeholder="Es: email@esempio.com" v-model.trim="form.email" required>
                     <div v-if="errors.email" class="invalid-feedback">{{ errors.email }}</div>
                     <small v-else class="form-text text-muted">Ti ricontatteremo a questo indirizzo</small>
                 </div>
