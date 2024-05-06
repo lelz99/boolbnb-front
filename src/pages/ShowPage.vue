@@ -19,7 +19,7 @@ export default {
         store,
         apartment: null,
         form: defaultForm,
-        successMessage: null,        
+        successMessage: null,
         // showSuccessAlert: false, 
         errors: {},
         isPristine: true
@@ -138,14 +138,14 @@ export default {
                     this.form.surname = '';
                     this.form.email = '';
                     this.form.text = '';
-                    this.successMessage = "Messaggio inviato con successo!";                   
+                    this.successMessage = "Messaggio inviato con successo!";
                 })
                 .catch(err => {
                     console.error(err);
                     this.successMessage = "Si è verificato un errore durante l'invio del messaggio.";
-                    if(err.response.status === 400){
-                        const {errors} = err.response.data
-                        this.errors = {...errors}
+                    if (err.response.status === 400) {
+                        const { errors } = err.response.data
+                        this.errors = { ...errors }
                     } else {
                         this.errors = { network: 'Si è verificato un errore' }
                     }
@@ -168,7 +168,7 @@ export default {
 </script>
 
 
-<template>   
+<template>
     <AppLoader v-if="store.isLoading" />
 
     <div v-else-if="!store.isLoading && apartment" class="container" id="show">
@@ -194,7 +194,7 @@ export default {
                 <!-- bottone invia messaggio -->
                 <a href="#message-area" class="btn btn-primary btn-sm">
                     <i class="fas fa-comments me-2 d-none d-sm-inline"></i>
-                    Contattal'host</a>
+                    Contatta l'host</a>
             </div>
             <div class="row justify-content-center text-center flex-column">
                 <p class="m-0">{{ apartment.address }}</p>
@@ -236,7 +236,7 @@ export default {
         </section>
         <!-- invia messaggio -->
         <section id="message-area" class="pb-3">
-            
+
             <!--! Alert -->
             <!-- <MessageFormAlert :isOpen="showAlert" @close="closeAlert" :type="alertType" :dismissible="!hasError">
                 <div v-if="successMessage">{{ successMessage }}
@@ -244,7 +244,7 @@ export default {
                         <li v-for="(error, key) in errors" :key="key">{{ error }}</li>
                     </ul>
                 </div>
-            </MessageFormAlert> -->            
+            </MessageFormAlert> -->
             <MessageFormAlert :isOpen="showAlert" @close="closeAlert" :type="alertType" :dismissible="!hasError">
                 <ul v-if="hasError">
                     <li v-for="(error, key) in errors" :key="key">{{ error }}</li>
@@ -296,12 +296,7 @@ export default {
 }
 
 /*styling elements*/
-#show>* {
-    background-color: white;
-    border-radius: 25px;
-    margin-bottom: 1rem;
-    padding: 1rem;
-}
+#show>* {}
 
 #eye-catcher {
     img {
