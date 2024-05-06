@@ -319,7 +319,7 @@ h3 {
 }
 
 section {
-    padding-bottom: 1rem;
+    padding-bottom: 1.5rem;
 }
 
 ul li i {
@@ -329,5 +329,10 @@ ul li i {
 a {
     color: black;
     text-decoration: none;
+}
+
+li {
+    padding: 0 12px;
+    margin-bottom: 16px;
 }
 </style>
