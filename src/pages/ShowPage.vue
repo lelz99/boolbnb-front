@@ -171,71 +171,71 @@ export default {
 <template>
     <AppLoader v-if="store.isLoading" />
 
-    <div v-else-if="!store.isLoading && apartment" class="container" id="show">
-        <header class="mt-3">
-            <h1 class="text-center m-0">{{ apartment.title }}</h1>
+    <div v-else-if="!store.isLoading && apartment" id="show">
+
+        <header class="d-flex justify-content-between my-3">
+            <RouterLink :to="{ name: 'home' }"><i class="fa-solid fa-chevron-left"></i> Indietro
+            </RouterLink>
+            <a href="#message-area">
+                Contatta l'host <i class="fa-solid fa-chevron-down"></i></a>
         </header>
-        <!-- immagine -->
-        <section id="eye-catcher" class="pb-3">
-            <div class="mb-3 row justify-content-center">
+
+        <!--* Img + Indirizzo -->
+        <section id="eye-catcher">
+            <!-- immagine -->
+            <div class="row justify-content-center">
                 <div class="row justify-content-center img-container col-lg-8 overflow-hidden">
                     <img :src="apartment.cover_image" :alt="apartment.title">
                 </div>
-                <!-- descrizione a comparsa in large -->
+                <!--# descrizione a comparsa in large -->
                 <div id="description" class="d-none d-lg-block col-lg-4 pt-1 ps-4">
-                    <h3 class="text-center pb-1 mb-2 bottom-border">Descrizione</h3>
-                    <p class="m-0">{{ apartment.description }}</p>
+                    <h3 class="mb-2 ">Descrizione</h3>
+                    <p>{{ apartment.description }}</p>
                 </div>
             </div>
-            <!-- bottone indietro -->
-            <div class="d-flex justify-content-evenly pb-3">
-                <RouterLink :to="{ name: 'home' }" class="btn btn-secondary btn-sm"><i
-                        class="fas fa-arrow-left me-2 d-none d-sm-inline"></i>Indietro</RouterLink>
-                <!-- bottone invia messaggio -->
-                <a href="#message-area" class="btn btn-primary btn-sm">
-                    <i class="fas fa-comments me-2 d-none d-sm-inline"></i>
-                    Contatta l'host</a>
-            </div>
+            <!-- Titolo appartamento -->
+            <h1 class="text-center">{{ apartment.title }}</h1>
+            <!-- Indirizzo appartamento -->
             <div class="row justify-content-center text-center flex-column">
-                <p class="m-0">{{ apartment.address }}</p>
-                <p class="m-0"><a href="#apartment-map">Trova su mappa <i class="fa-solid fa-chevron-down"></i></a></p>
+                <p>{{ apartment.address }}</p>
+                <p><a href="#apartment-map">Trova su mappa <i class="fa-solid fa-chevron-down"></i></a></p>
             </div>
         </section>
-        <!-- proprietà -->
-        <section id="details" class="pb-3 details-img">
-            <h3 class="text-center pb-1 mb-3 bottom-border">Dettagli</h3>
+        <!--* proprietà -->
+        <section id="details" class=" details-img">
+            <h3>Dettagli Appartamento</h3>
             <ul class="row m-0 row-cols-1 row-cols-sm-2 row-cols-xl-4 list-unstyled">
-                <li><span><i class="fa-solid fa-ruler-combined me-2 brand-color"></i> Metri quadri:
+                <li><span><i class="fa-solid fa-ruler-combined"></i> Metri quadri:
                         {{ apartment.square_meters }}</span></li>
-                <li><span><i class="fa-solid fa-door-closed me-2 brand-color"></i> Numero stanze:
+                <li><span><i class="fa-solid fa-door-closed"></i> Numero stanze:
                         {{ apartment.rooms }}</span></li>
-                <li><span><i class="fa-solid fa-bed me-2 brand-color"></i> Camere da letto: {{ apartment.beds }}
+                <li><span><i class="fa-solid fa-bed"></i> Camere da letto: {{ apartment.beds }}
                     </span></li>
-                <li><span><i class="fa-solid fa-bath me-2 brand-color"></i> Numero bagni: {{ apartment.baths }}
+                <li><span><i class="fa-solid fa-bath"></i> Numero bagni: {{ apartment.baths }}
                     </span></li>
             </ul>
         </section>
-        <!-- servizi -->
-        <section id="services" class="pb-3">
-            <h3 class="text-center pb-1 mb-3 bottom-border">Servizi</h3>
+        <!--* servizi -->
+        <section id="services">
+            <h3>Cosa Troverai</h3>
             <ul class="row m-0 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 list-unstyled">
 
-                <li v-for="service in apartment.services "><span><i :class="`${service.icon} me-2 brand-color`"></i>
+                <li v-for="service in apartment.services "><span><i :class="`${service.icon}`"></i>
                         {{ service.label }}</span></li>
             </ul>
         </section>
-        <!-- descrizione -->
-        <section id="description" class="pb-3 d-lg-none">
-            <h3 class="text-center pb-1 mb-3 bottom-border">Descrizione</h3>
+        <!--* descrizione -->
+        <section id="description" class=" d-lg-none">
+            <h3>Descrizione</h3>
             <p class="m-0">{{ apartment.description }}</p>
         </section>
-        <!-- mappa -->
-        <section id="apartment-map" class="pb-3">
-            <h3 class="text-center pb-1 mb-3 bottom-border">Dove sarai</h3>
+        <!--* mappa -->
+        <section id="apartment-map">
+            <h3>Dove sarai</h3>
             <div id="map-div"></div>
         </section>
-        <!-- invia messaggio -->
-        <section id="message-area" class="pb-3">
+        <!--* invia messaggio -->
+        <section id="message-area">
 
             <!--! Alert -->
             <!-- <MessageFormAlert :isOpen="showAlert" @close="closeAlert" :type="alertType" :dismissible="!hasError">
@@ -254,21 +254,23 @@ export default {
                 </div>
             </MessageFormAlert>
 
-
+            <!-- Form invio messaggi -->
             <form @submit.prevent="sendForm" enctype="multipart/form-data" novalidate>
-                <h3 class="text-center pb-1 mb-3 bottom-border">Contatta l'host</h3>
+                <h3>Contatta l'host</h3>
+                <!-- Nome -->
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome</label>
-
                     <input type="text" class="form-control" name="name" id="name" placeholder="Es: Mario"
                         v-model.trim="form.name">
                 </div>
+                <!-- Cognome -->
                 <div class="mb-3">
                     <label for="surname" class="form-label">Cognome</label>
                     <input type="text" class="form-control" name="surname" id="surname" placeholder="Es: Rossi"
                         v-model.trim="form.surname">
                     <div v-if="errors.surname" class="invalid-feedback">{{ errors.surname }}</div>
                 </div>
+                <!-- Email -->
                 <div class="mb-3">
                     <label for="email" class="form-label">Indirizzo Mail<sup class="text-danger">*</sup></label>
                     <input type="email" class="form-control" :class="validateField('email')" name="email" id="email"
@@ -276,12 +278,14 @@ export default {
                     <div v-if="errors.email" class="invalid-feedback">{{ errors.email }}</div>
                     <small v-else class="form-text text-muted">Ti ricontatteremo a questo indirizzo</small>
                 </div>
+                <!-- Textarea -->
                 <div class="mb-3">
                     <label for="text" class="form-label">Corpo del messaggio<sup class="text-danger">*</sup></label>
                     <textarea class="form-control" :class="validateField('text')" name="text" id="text" rows="3"
                         v-model.trim="form.text" required></textarea>
                     <div v-if="errors.text" class="invalid-feedback">{{ errors.text }}</div>
                 </div>
+                <!-- Invia -->
                 <button class="btn btn-primary" type="submit">Invia Messaggio</button>
             </form>
         </section>
@@ -289,48 +293,34 @@ export default {
     </div>
 </template>
 
-<style lang="scss">
-/*utilities*/
-.bottom-border {
-    border-bottom: 1px #172BA1 solid;
+<style lang="scss" scoped>
+/*reset*/
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 /*styling elements*/
-#show>* {}
-
-#eye-catcher {
-    img {
-        object-fit: cover;
-        width: 100%;
-        max-height: 384px;
-        border-radius: 25px;
-        padding: 0;
-    }
-
-    div {
-        overflow-y: auto;
-        max-height: 384px;
-    }
-
-    div::-webkit-scrollbar {
-        display: none;
-    }
-}
-
-#details li,
-#services li {
-    margin-bottom: 1rem;
-
-    span {
-        background-color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 25px;
-    }
-}
 
 #map-div {
     width: 100%;
     height: 300px;
     border-radius: 25px;
+}
+
+h3 {
+    margin-bottom: 1rem;
+    text-align: center;
+    padding-bottom: 4px;
+    border-bottom: 1px #172BA1 solid;
+}
+
+section {
+    padding-bottom: 1rem;
+}
+
+ul li i {
+    margin-right: 8px;
 }
 </style>
