@@ -184,7 +184,7 @@ export default {
         <section id="eye-catcher">
             <!-- immagine -->
             <div class="row justify-content-center">
-                <div class="row justify-content-center img-container col-lg-8 overflow-hidden">
+                <div class="row justify-content-center img-container col-lg-8 overflow-hidden mb-3 rounded">
                     <img :src="apartment.cover_image" :alt="apartment.title">
                 </div>
                 <!--# descrizione a comparsa in large -->
@@ -197,14 +197,16 @@ export default {
             <h1 class="text-center">{{ apartment.title }}</h1>
             <!-- Indirizzo appartamento -->
             <div class="row justify-content-center text-center flex-column">
-                <p>{{ apartment.address }}</p>
-                <p><a href="#apartment-map">Trova su mappa <i class="fa-solid fa-chevron-down"></i></a></p>
+                <em>{{ apartment.address }}</em>
+                <p>
+                    <a href="#apartment-map">Trova sulla mappa</a>
+                </p>
             </div>
         </section>
         <!--* proprietà -->
         <section id="details" class=" details-img">
             <h3>Dettagli Appartamento</h3>
-            <ul class="row m-0 row-cols-1 row-cols-sm-2 row-cols-xl-4 list-unstyled">
+            <ul class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 list-unstyled">
                 <li><span><i class="fa-solid fa-ruler-combined"></i> Metri quadri:
                         {{ apartment.square_meters }}</span></li>
                 <li><span><i class="fa-solid fa-door-closed"></i> Numero stanze:
@@ -218,7 +220,7 @@ export default {
         <!--* servizi -->
         <section id="services">
             <h3>Cosa Troverai</h3>
-            <ul class="row m-0 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 list-unstyled">
+            <ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 list-unstyled">
 
                 <li v-for="service in apartment.services "><span><i :class="`${service.icon}`"></i>
                         {{ service.label }}</span></li>
@@ -227,7 +229,7 @@ export default {
         <!--* descrizione -->
         <section id="description" class=" d-lg-none">
             <h3>Descrizione</h3>
-            <p class="m-0">{{ apartment.description }}</p>
+            <p>{{ apartment.description }}</p>
         </section>
         <!--* mappa -->
         <section id="apartment-map">
@@ -322,5 +324,10 @@ section {
 
 ul li i {
     margin-right: 8px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
 }
 </style>
