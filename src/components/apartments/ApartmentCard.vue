@@ -51,7 +51,7 @@ export default {
                             class="fa-solid fa-crown"></i></span>
                 </figure>
                 <div class="card-body">
-                    <h5 class="">{{ apartment.title }}</h5>
+                    <h5 class="card-title">{{ apartment.title }}</h5>
                     <div class="d-flex gap-3">
                         <p class="mb-2"><i class="fa-solid fa-location-dot"></i> {{ apartment.address }}</p>
                         <p v-show="apartment.distance" class="mb-2">{{ roundedDistance }} km</p>
@@ -126,6 +126,10 @@ a {
         padding-top: 0;
         // overflow-y: auto;
         overflow-y: hidden; // Nasconde la scrollbar verticale
+
+        .card-title{
+            min-height: 50px;
+        }
     }
 }
 
