@@ -15,6 +15,8 @@ export default {
   data() {
     return {
       apartmentsList: [],
+      sponsoredApartments: [], // Appartamenti sponsorizzati
+      otherApartments: [], // Altri appartamenti
       apartmentsPage: [], //array per i link delle pagine della paginazione
       isLoading: false,
       isAlertOpen: false,
@@ -103,7 +105,10 @@ export default {
           this.apartmentsList = res.data.data; //recupero i dati dell'appartamento
           this.apartmentsPage = res.data.links; //recupero i link delle pagine per la paginazione
           this.isAlertOpen = false;
-        })
+          // Separo gli appartamenti sponsorizzati dagli altri appartamenti
+          this.sponsoredApartments = this.apartmentsList.filter(apartment => apartment.sponsored);
+          this.otherApartments = this.apartmentsList.filter(apartment => !apartment.sponsored);
+      })
         .catch(err => {
           console.error(err);
           this.isAlertOpen = true;
@@ -145,7 +150,7 @@ export default {
         <AppLoader v-if="isLoading" />
         
         <!-- Applica l'effetto di comparizione alle carte -->
-        <ApartmentList v-else :apartments="apartmentsList" :pages="apartmentsPage" @change-page="fetchApartments" class="appearance-effect" />
+        <ApartmentList :sponsored-apartments="sponsoredApartments" :other-apartments="otherApartments"  :pages="apartmentsPage" @change-page="fetchApartments" class="appearance-effect" />       
       </div>
       <div class="background-image"></div>
     </div>

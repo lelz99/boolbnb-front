@@ -4,14 +4,26 @@ import ApartmentCard from './ApartmentCard.vue';
 export default {
     name: 'ApartmentList',
     components: {ApartmentCard},
-    props: { apartments: Array, pages: Array },
+    props: { 
+      sponsoredApartments: Array,
+      otherApartments: Array,
+      pages: Array },
     emits:['change-page']
 }
 </script>
 <template>
+   <section id="sponsored-apartments">
+        <div v-if="sponsoredApartments.length" class="row mb-5 mt-3 g-3">
+            <h2>In evidenza</h2>
+            <ApartmentCard v-for="apartment in sponsoredApartments" :key="apartment.id" :apartment="apartment"/>
+        </div>
+        <!-- <h3 v-else class="mt-4">Non ci sono appartamenti sponsorizzati</h3> -->
+    </section>
+
     <section id="apartments-list">
-        <div v-if="apartments.length" class="row mb-5 mt-3 g-3">
-            <ApartmentCard v-for="apartment in apartments" :key="apartment.id" :apartment="apartment"/>
+        <div v-if="otherApartments.length" class="row mb-5 mt-3 g-3">
+          <h2>Altri appartamenti</h2>
+            <ApartmentCard v-for="apartment in otherApartments" :key="apartment.id" :apartment="apartment"/>
             <div class="d-flex justify-content-center">
                 <a class="btn-back-top" href="#">
                     <svg height="1.2em" class="arrow" viewBox="0 0 512 512"><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"></path></svg>
