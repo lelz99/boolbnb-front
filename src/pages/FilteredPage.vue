@@ -170,20 +170,19 @@ export default {
                     </li>
                 </ul>
             </div>
-        </div>
+        </div>        
 
-        <div class="col-7">
+        <div class="col-9">
             <div class="mt-3 ms-3">
                 <label class="form-label text-light">Servizi</label>
                 <div class="row form-group">
                     <div v-for="service in services" :key="service.id" class="form-check form-check-inline col-3 p-0">
                         <label class="check-container d-flex ">
-                            <input class="form-check-input" type="checkbox" :id="service.id" v-model="filterService"
-                                :value="service.id">
+                            <input class="form-check-input" type="checkbox" :id="service.id" v-model="filterService" :value="service.id">                                
                             <div class="checkmark"></div>
                             <label class="form-check-label" :for="service.id" role="button">
                                 <i :class="service.icon" class="mx-2" :title="service.label"></i>
-                                <span class="d-none d-md-inline">{{ service.label }}</span>
+                                <span class="d-none d-lg-inline">{{ service.label }}</span>
                             </label>
                         </label>
                     </div>
@@ -193,16 +192,15 @@ export default {
 
         <div class="col-3 mt-3">
             <div class="row">
-
                 <div class="col-6">
                     <div class="mb-3">
-                        <label for="beds" class="form-label text-light">Numero Letti</label>
+                        <label for="beds" class="form-label text-light text-nowrap">N° Letti</label>
                         <input type="number" min="1" class="form-control" id="beds" v-model="store.beds">
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="mb-3">
-                        <label for="rooms" class="form-label text-light">Numero Stanze</label>
+                        <label for="rooms" class="form-label text-light text-nowrap">N° Stanze</label>
                         <input type="number" class="form-control" id="rooms" v-model="store.rooms" min="1">
                     </div>
                 </div>
