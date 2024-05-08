@@ -24,7 +24,7 @@ export default {
     <!-- Appartamenti sponsorizzati -->
     <section id="sponsored-apartments" v-else-if="!store.isLoading && store.sponsoredApartments.length">
         <div class="row mb-5 mt-3 g-3">
-          <div class="badge"><h2 class="text-center">In evidenza</h2></div>
+          <h2 class="text-center"><span class="badge rounded-pill">In evidenza</span></h2>
             <ApartmentCard v-for="apartment in sponsoredApartments" :key="apartment.id" :apartment="apartment"/>
         </div>       
     </section> 
@@ -32,7 +32,7 @@ export default {
     <!-- Lista appartamenti generica -->
     <section id="apartments-list">
         <div v-if="apartments.length" class="row mb-5 mt-3 g-3">
-            <div class="badge"><h2 class="text-center">Scopri i nostri appartamenti</h2></div>
+            <h2 class="text-center"><span class="badge rounded-pill">Scopri i nostri appartamenti</span></h2>
             <ApartmentCard v-for="apartment in apartments" :key="apartment.id" :apartment="apartment"/>
             <div class="d-flex justify-content-center">
                 <a class="btn-back-top" href="#">
@@ -54,6 +54,14 @@ export default {
   
 </template>
 <style lang="scss" scoped>
+
+.badge{
+  color: #172BA1;
+  background-color: white;
+  font-size: 2rem;
+  padding: 20px;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+}
 
 .btn-back-top {
   width: 45px;
