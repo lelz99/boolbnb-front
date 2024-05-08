@@ -180,6 +180,16 @@ export default {
                 Contatta l'host <i class="fa-solid fa-chevron-down"></i></a>
         </header>
 
+        <MessageFormAlert :isOpen="showAlert" @close="closeAlert" :type="alertType" :dismissible="!hasError"
+            class="p-3 my-2">
+            <ul v-if="hasError">
+                <li v-for="(error, key) in errors" :key="key">{{ error }}</li>
+            </ul>
+            <div v-else>
+                <span>{{ successMessage }}</span>
+            </div>
+        </MessageFormAlert>
+
         <!--* Img + Indirizzo -->
         <section id="eye-catcher">
             <!-- immagine -->
@@ -246,16 +256,6 @@ export default {
                         <li v-for="(error, key) in errors" :key="key">{{ error }}</li>
                     </ul>
                 </div>
-            </MessageFormAlert> -->
-            <MessageFormAlert :isOpen="showAlert" @close="closeAlert" :type="alertType" :dismissible="!hasError">
-                <ul v-if="hasError">
-                    <li v-for="(error, key) in errors" :key="key">{{ error }}</li>
-                </ul>
-                <div v-else>
-                    <span>{{ successMessage }}</span>
-                </div>
-            </MessageFormAlert>
-
             <!-- Form invio messaggi -->
             <form @submit.prevent="sendForm" enctype="multipart/form-data" novalidate>
                 <h3>Contatta l'host</h3>
