@@ -9,7 +9,7 @@ export default {
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container d-flex justify-content-between">
             <div class="d-flex align-items-center">
-                <a class cla="navbar-brand" href="#">
+                <a class="navbar-brand" href="#">
                     <img src="../../public/Boolbnb-logo-nobg.png" alt="Boolbnb logo" class="nav-logo">
                 </a>
                 <router-link class="nav-link" :to="{ name: 'home' }">Home</router-link>
