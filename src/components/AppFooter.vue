@@ -849,7 +849,7 @@ export default {
           </ul>
         </div>
         <div class="col-md-3">
-          <h4>Seguici su</h4>
+          <h4>Seguici sui social</h4>
           <div class="socials-container">
             <a href="#" class="social instagram"
     ><svg height="1em" viewBox="0 0 448 512">
