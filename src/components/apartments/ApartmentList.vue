@@ -21,18 +21,18 @@ export default {
 <template>
     <AppLoader v-if="store.isLoading" />
    
-
+    <!-- Appartamenti sponsorizzati -->
     <section id="sponsored-apartments" v-else-if="!store.isLoading && store.sponsoredApartments.length">
         <div class="row mb-5 mt-3 g-3">
-          <h2 class="text-center">In evidenza</h2>
+          <div class="badge"><h2 class="text-center">In evidenza</h2></div>
             <ApartmentCard v-for="apartment in sponsoredApartments" :key="apartment.id" :apartment="apartment"/>
         </div>       
     </section> 
 
-
+    <!-- Lista appartamenti generica -->
     <section id="apartments-list">
         <div v-if="apartments.length" class="row mb-5 mt-3 g-3">
-            <h2 class="text-center">Scopri i nostri appartamenti</h2>
+            <div class="badge"><h2 class="text-center">Scopri i nostri appartamenti</h2></div>
             <ApartmentCard v-for="apartment in apartments" :key="apartment.id" :apartment="apartment"/>
             <div class="d-flex justify-content-center">
                 <a class="btn-back-top" href="#">
@@ -54,6 +54,7 @@ export default {
   
 </template>
 <style lang="scss" scoped>
+
 .btn-back-top {
   width: 45px;
   height: 45px;

@@ -143,7 +143,7 @@ export default {
       <div class="page-content" :class="{ 'show-content': showContent }">
         <div class="col-12">
           <!-- Ricerca -->
-          <SearchBar @selectAddress="selectAddress" @suggest="suggestAddresses" :suggestions='suggestions'
+          <SearchBar class="my-5" @selectAddress="selectAddress" @suggest="suggestAddresses" :suggestions='suggestions'
             v-model="addressTerm" v-model:distanceRadius="distanceRadius" :selectedAddress="selectedAddress"
             @submitForm="submitForm" />
         </div>
