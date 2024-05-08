@@ -28,10 +28,10 @@ export default {
       longitude: '', // Longitudine selezionata
       distanceRadius: '20', // Imposta un valore predefinito per il raggio di distanza (20 km)
       timeout: null, // Timeout per ritardare le richieste
-      showVideo: true, // Mostra il video di sfondo all'inizio
-      showContent: false // Aggiunto per gestire la transizione del contenuto
+      showVideo: false, // Mostra il video di sfondo all'inizio
+      showContent: true // Aggiunto per gestire la transizione del contenuto
     };
-    
+
   },
   methods: {
     suggestAddresses() {
@@ -97,8 +97,8 @@ export default {
     },
 
     fetchApartments(endpoint) { //gli passo l'url della pagina a cui deve andare (paginazione)
-    console.log('Endpoint:', endpoint);
-      if(!endpoint) endpoint = baseUri + 'apartments/'; //se non c'è un endpoint diverso da quello della prima pagina, viene caricata la prima pagina
+      console.log('Endpoint:', endpoint);
+      if (!endpoint) endpoint = baseUri + 'apartments/'; //se non c'è un endpoint diverso da quello della prima pagina, viene caricata la prima pagina
       this.isLoading = true;
       axios.get(endpoint) //aggiorno con il nuovo endpoint
         .then(res => {
@@ -149,9 +149,11 @@ export default {
         </div>
         <AppAlert :show="isAlertOpen" @close="isAlertOpen = false" />
         <AppLoader v-if="isLoading" />
-        
+
         <!-- Applica l'effetto di comparizione alle carte -->
-        <ApartmentList v-else :apartments="apartmentsList" :sponsored-apartments="sponsoredApartments" :other-apartments="otherApartments" :pages="apartmentsPage" @change-page="fetchApartments" class="appearance-effect" />
+        <ApartmentList v-else :apartments="apartmentsList" :sponsored-apartments="sponsoredApartments"
+          :other-apartments="otherApartments" :pages="apartmentsPage" @change-page="fetchApartments"
+          class="appearance-effect" />
       </div>
       <div class="background-image"></div>
     </div>
@@ -196,6 +198,7 @@ export default {
     transform: translateY(100%);
     opacity: 0;
   }
+
   100% {
     transform: translateY(0);
     opacity: 1;
@@ -355,16 +358,16 @@ export default {
     <div v-else>
       <div class="page-content" :class="{ 'show-content': showContent }">
         <div class="col-12"> -->
-          <!-- Ricerca -->
-          <!-- <SearchBar @selectAddress="selectAddress" @suggest="suggestAddresses" :suggestions='suggestions'
+<!-- Ricerca -->
+<!-- <SearchBar @selectAddress="selectAddress" @suggest="suggestAddresses" :suggestions='suggestions'
             v-model="addressTerm" v-model:distanceRadius="distanceRadius" :selectedAddress="selectedAddress"
             @submitForm="submitForm" />
         </div>
         <AppAlert :show="isAlertOpen" @close="isAlertOpen = false" />
         <AppLoader v-if="isLoading" /> -->
-        
-        <!-- Applica l'effetto di comparizione alle carte -->
-        <!-- <ApartmentList v-else :apartments="apartmentsList" class="appearance-effect" />
+
+<!-- Applica l'effetto di comparizione alle carte -->
+<!-- <ApartmentList v-else :apartments="apartmentsList" class="appearance-effect" />
       </div>
       <div class="background-image"></div>
     </div>
@@ -568,16 +571,16 @@ export default {
     <div v-else>
       <div class="page-content" :class="{ 'show-content': showContent }">
         <div class="col-12"> -->
-          <!-- Ricerca -->
-          <!-- <SearchBar @selectAddress="selectAddress" @suggest="suggestAddresses" :suggestions='suggestions'
+<!-- Ricerca -->
+<!-- <SearchBar @selectAddress="selectAddress" @suggest="suggestAddresses" :suggestions='suggestions'
             v-model="addressTerm" v-model:distanceRadius="distanceRadius" :selectedAddress="selectedAddress"
             @submitForm="submitForm" />
         </div>
         <AppAlert :show="isAlertOpen" @close="isAlertOpen = false" />
         <AppLoader v-if="isLoading" /> -->
-        
-        <!-- Applica l'effetto di comparizione alle carte -->
-        <!-- <ApartmentList v-else :apartments="apartmentsList" class="appearance-effect" />
+
+<!-- Applica l'effetto di comparizione alle carte -->
+<!-- <ApartmentList v-else :apartments="apartmentsList" class="appearance-effect" />
       </div>
       <div class="background-image"></div>
     </div>
