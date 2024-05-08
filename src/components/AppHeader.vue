@@ -7,23 +7,14 @@ export default {
 
 <template>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container">
-            <a class="navbar-brand" href="#"><img src="../../public/Boolbnb-logo-nobg.png" alt="Boolbnb logo"
-                    class="nav-logo"></a>
-
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
-                <ul class="navbar-nav d-flex ">
-                    <li class="nav-item">
-                        <router-link class="nav-link" :to="{ name: 'home' }">Home</router-link>
-                    </li>
-                </ul>
-                <router-link class="nav-link" :to="{ name: '' }"><i class="fa-regular fa-user"></i></router-link>
+        <div class="container d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+                <a class cla="navbar-brand" href="#">
+                    <img src="../../public/Boolbnb-logo-nobg.png" alt="Boolbnb logo" class="nav-logo">
+                </a>
+                <router-link class="nav-link" :to="{ name: 'home' }">Home</router-link>
             </div>
+            <router-link class="nav-link" :to="{ name: '' }"><i class="fa-regular fa-user"></i></router-link>
         </div>
     </nav>
 </template>
