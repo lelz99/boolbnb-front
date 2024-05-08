@@ -5,15 +5,15 @@ import ApartmentList from '../components/apartments/ApartmentList.vue';
 import AppLoader from '../components/AppLoader.vue';
 import AppAlert from '../components/AppAlert.vue';
 import { store } from '../data/store';
-import SearchBar from '../components/SearchBar.vue';
 
 const baseUri = 'http://localhost:8000/api/';
 
 export default {
   name: 'HomePage',
-  components: { ApartmentCard, ApartmentList, AppAlert, SearchBar },
+  components: { ApartmentCard, ApartmentList, AppAlert },
   data() {
     return {
+      store,
       apartmentsList: [],
       apartmentsPage: [], //array per i link delle pagine della paginazione
       isLoading: false,
@@ -25,6 +25,8 @@ export default {
       latitude: '', // Latitudine selezionata
       longitude: '', // Longitudine selezionata
       distanceRadius: '20', // Imposta un valore predefinito per il raggio di distanza (20 km)
+      addressSelected: false, // Flag per tenere traccia dello stato di selezione dell'indirizzo
+      addressError: false, // Flag per indicare se c'è un errore nell'indirizzo inserito
       timeout: null, // Timeout per ritardare le richieste
       showVideo: true, // Mostra il video di sfondo all'inizio
       showContent: false // Aggiunto per gestire la transizione del contenuto
@@ -67,14 +69,23 @@ export default {
 
     selectAddress(address) {
       store.selectedAddress = address;
+      this.selectedAddress = address;
       store.latitude = address.lat;
       store.longitude = address.lon;
       this.addressTerm = address.address;
       store.addressTerm = address.address;
       this.suggestions = [];
+      this.addressSelected = true; // Imposta il flag addressSelected su true
     },
-
     submitForm() {
+     // Verifica se è stato selezionato un indirizzo valido
+     if (!this.selectedAddress || this.selectedAddress.address !== this.addressTerm.trim()) {
+        // Imposta il flag addressError su true per mostrare il messaggio di errore
+        this.addressError = true;
+        return; // Esce dalla funzione se l'indirizzo non corrisponde
+      }
+      // Azzera il flag addressError se non ci sono errori
+      this.addressError = false;
       axios.get(`http://localhost:8000/api/apartments/search`, {
         params: {
           latitude: store.latitude,
@@ -95,7 +106,6 @@ export default {
     },
 
     fetchApartments(endpoint) { //gli passo l'url della pagina a cui deve andare (paginazione)
-    console.log('Endpoint:', endpoint);
       if(!endpoint) endpoint = baseUri + 'apartments/'; //se non c'è un endpoint diverso da quello della prima pagina, viene caricata la prima pagina
       this.isLoading = true;
       axios.get(endpoint) //aggiorno con il nuovo endpoint
@@ -136,11 +146,36 @@ export default {
     <div v-else>
       <div class="page-content" :class="{ 'show-content': showContent }">
         <div class="col-12">
-          <!-- Ricerca -->
-          <SearchBar @selectAddress="selectAddress" @suggest="suggestAddresses" :suggestions='suggestions'
-            v-model="addressTerm" v-model:distanceRadius="distanceRadius" :selectedAddress="selectedAddress"
-            @submitForm="submitForm" />
+            <div class="mb-3 ">
+                <div class="d-flex gap-3 align-items-center justify-content-between">
+                    <div class="search w-100">
+                        <input type="text" class="form-control" id="address" name="address" v-model="this.addressTerm"
+                            @input="suggestAddresses" placeholder="Cerca...">
+                        <router-link :to="{ name: 'filter' }">
+                            <button class="btn" @click="submitForm"><i
+                                    class="fas fa-search fa-xl"></i></button>
+                        </router-link>
+                    </div>
+                    <div class="distance">
+                        <div class="d-flex w-100">
+                            <div class="w-100"><i class="fa-solid fa-location-dot color-blue"></i> Max {{ this.distanceRadius }} km</div>
+                            <input type="range" class="form-range" id="radius" name="radius" min="5" max="30" step="5"
+                                v-model.number="this.distanceRadius">
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="addressError" class="text-danger">Seleziona un indirizzo tra quelli suggeriti.</div>
+
+                <ul id="suggestions-list" class="p-2 mt-3 bg-light rounded" v-show="suggestions.length > 0">
+                    <li v-for="suggestion in suggestions" :key="suggestion.lat + suggestion.lon"
+                        @click="selectAddress(suggestion)">
+                        <i class="fa-solid fa-location-dot text-primary"></i> {{ suggestion.address }}
+                    </li>
+                </ul>
+            </div>
         </div>
+
         <AppAlert :show="isAlertOpen" @close="isAlertOpen = false" />
         <AppLoader v-if="isLoading" />
         
@@ -207,6 +242,57 @@ export default {
   z-index: -1;
   filter: contrast(60%);
 
+}
+
+.search {
+  display: inline-block;
+  position: relative;
+}
+
+.search input[type="text"] {
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.search .btn {
+  background-color: #4e99e9;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: .9s ease;
+}
+
+.search .btn:hover {
+  transform: scale(1.1);
+  color: rgb(255, 255, 255);
+  background-color: blue;
+}
+
+.distance{
+    width: 400px;
+    background-color: #fff;
+    color: grey;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group{
+    background-color: #fff;
+    color: grey;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 </style>
 
