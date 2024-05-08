@@ -212,7 +212,7 @@ export default {
 
     <AppAlert :show="store.isAlertOpen" @close="store.isAlertOpen = false" />
     <AppLoader v-if="store.isLoading" />
-    <ApartmentList v-else :apartments="store.apartments" />
+    <ApartmentList v-else :apartments="store.apartments" :sponsored-apartments="store.sponsoredApartments"/>
     <div class="background-image"></div>
 </template>
 
