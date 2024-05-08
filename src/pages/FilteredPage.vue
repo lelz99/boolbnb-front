@@ -2,13 +2,14 @@
 import axios from 'axios';
 import ApartmentCard from '../components/apartments/ApartmentCard.vue';
 import ApartmentList from '../components/apartments/ApartmentList.vue';
+import GeneralApartmentList from '../components/apartments/GeneralApartmentList.vue';
 import AppLoader from '../components/AppLoader.vue';
 import AppAlert from '../components/AppAlert.vue';
 import { store } from '../data/store';
 
 export default {
     name: 'FilteredPage',
-    components: { ApartmentCard, ApartmentList, AppAlert },
+    components: { ApartmentCard, ApartmentList, AppAlert, GeneralApartmentList },
     data() {
         return {
             store,
@@ -210,7 +211,8 @@ export default {
 
     <AppAlert :show="store.isAlertOpen" @close="store.isAlertOpen = false" />
     <AppLoader v-if="store.isLoading" />
-    <ApartmentList v-else :apartments="store.apartments" :sponsored-apartments="store.sponsoredApartments"/>
+    <!-- <ApartmentList v-else :apartments="store.apartments" :sponsored-apartments="store.sponsoredApartments"/> -->
+    <GeneralApartmentList v-else :apartments="store.apartments"/> 
     <div class="background-image"></div>
 </template>
 
