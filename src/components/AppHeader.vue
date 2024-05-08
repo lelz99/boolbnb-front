@@ -8,7 +8,8 @@ export default {
 <template>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container">
-            <a class="navbar-brand" href="#"><img src="/boolbnb-logo-nobg.png" alt="Boolbnb logo" class="nav-logo"></a>
+            <a class="navbar-brand" href="#"><img src="../../public/Boolbnb-logo-nobg.png" alt="Boolbnb logo"
+                    class="nav-logo"></a>
 
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
